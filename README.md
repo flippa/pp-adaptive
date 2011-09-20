@@ -36,10 +36,10 @@ Via rubygems:
       :return_url       => "http://site.com/completed"
     ))
     
-    if response.ack_code == "Success"
-      puts "Preapproval key = #{response.preapproval_key}"
+    if response.success?
+      puts "Preapproval key: #{response.preapproval_key}"
     else
-      puts "Request failed: #{response.ack_code}"
+      puts "#{response.ack_code}: #{response.error_message}"
     end
 ```
 

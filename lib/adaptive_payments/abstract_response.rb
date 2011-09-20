@@ -1,6 +1,11 @@
+require "adaptive_payments/response_envelope"
+require "adaptive_payments/fault_message"
+
 module AdaptivePayments
   class AbstractResponse
     include Virtus
+    include ResponseEnvelope
+    include FaultMessage
 
     class << self
       def operation(name = nil)
@@ -23,7 +28,7 @@ module AdaptivePayments
       end
 
       string.split("&").inject({}) do |hash, pair|
-        key, value = pair.split("=").map { |v| URI.decode(v) }
+        key, value = pair.split("=").map { |v| URI.decode(v.gsub("+", "%20")) }
         next hash if map[key].nil?
         hash.merge(map[key] => value)
       end
