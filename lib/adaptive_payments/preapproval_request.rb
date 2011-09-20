@@ -23,10 +23,10 @@ module AdaptivePayments
     attribute :error_language,           String,   :param => "requestEnvelope.errorLanguage", :default => "en_US"
 
     def to_hash
-      super.merge(
-        param_key(:max_total_amount)       => "%.2f" % max_total_amount,
-        param_key(:max_amount_per_request) => "%.2f" % max_amount_per_request
-      )
+      hash = super
+      hash[param_key(:max_total_amount)]       = "%.2f" % max_total_amount       unless max_total_amount.nil?
+      hash[param_key(:max_amount_per_request)] = "%.2f" % max_amount_per_request unless max_amount_per_request.nil?
+      hash
     end
   end
 end

@@ -99,6 +99,11 @@ describe AdaptivePayments::PreapprovalRequest do
     request.to_hash["displayMaxTotalAmount"].should == "false"
   end
 
+  it "does not include omitted parameters" do
+    request.max_amount_per_request = nil
+    request.to_hash.should_not have_key("maxAmountPerRequest")
+  end
+
   it "includes 'en_US' as the 'errorLanguage'" do
     request.to_hash["requestEnvelope.errorLanguage"].should == "en_US"
   end
