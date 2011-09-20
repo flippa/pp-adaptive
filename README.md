@@ -16,6 +16,7 @@ Via rubygems:
 
 ## Setting up a Preapproval Agreement
 
+``` ruby
     require 'pp-adaptive'
     
     client = AdaptivePayments::Client.new(
@@ -40,5 +41,6 @@ Via rubygems:
     else
       puts "Request failed: #{response.ack_code}"
     end
+```
 
 (Work in progress...)
