@@ -6,12 +6,24 @@ describe AdaptivePayments::PreapprovalRequest do
 
   let(:request) do
     AdaptivePayments::PreapprovalRequest.new(
-      :ending_date      => DateTime.new(2011, 9, 20, 7, 57, 2, Rational(10, 24)),
-      :starting_date    => DateTime.new(2011, 9, 20, 7, 49, 2, Rational(5, 24)),
-      :max_total_amount => 720,
-      :currency_code    => "USD",
-      :cancel_url       => "http://site.com/cancelled",
-      :return_url       => "http://site.com/succeeded"
+      :ending_date              => DateTime.new(2011, 9, 20, 7, 57, 2, Rational(10, 24)),
+      :starting_date            => DateTime.new(2011, 9, 20, 7, 49, 2, Rational(5, 24)),
+      :max_total_amount         => 720,
+      :currency_code            => "USD",
+      :cancel_url               => "http://site.com/cancelled",
+      :return_url               => "http://site.com/succeeded",
+      :ipn_notification_url     => "http://site.com/ipn",
+      :date_of_month            => 15,
+      :day_of_week              => "friday",
+      :max_amount_per_request   => 60,
+      :max_payments             => 12,
+      :max_payments_per_period  => 1,
+      :payment_period           => "monthly",
+      :memo                     => "some memo",
+      :sender_email             => "sender@site.com",
+      :pin_type                 => "required",
+      :fees_payer               => "sender",
+      :display_max_total_amount => false
     )
   end
 
@@ -39,32 +51,55 @@ describe AdaptivePayments::PreapprovalRequest do
     request.to_hash["returnUrl"].should == "http://site.com/succeeded"
   end
 
+  it "maps #ipn_notification_url to 'ipnNotificationUrl'" do
+    request.to_hash["ipnNotificationUrl"].should == "http://site.com/ipn"
+  end
+
+  it "maps #date_of_month to 'dateOfMonth'" do
+    request.to_hash["dateOfMonth"].should == "15"
+  end
+
+  it "maps #day_of_week to 'dayOfWeek'" do
+    request.to_hash["dayOfWeek"].should == "friday"
+  end
+
+  it "maps #max_amount_per_request to 'maxAmountPerRequest'" do
+    request.to_hash["maxAmountPerRequest"].should == "60.00"
+  end
+
+  it "maps #max_payments to 'maxNumberOfPayments'" do
+    request.to_hash["maxNumberOfPayments"].should == "12"
+  end
+
+  it "maps #max_payments_per_period to 'maxNumberOfPaymentsPerPeriod'" do
+    request.to_hash["maxNumberOfPaymentsPerPeriod"].should == "1"
+  end
+
+  it "maps #payment_period to 'paymentPeriod'" do
+    request.to_hash["paymentPeriod"].should == "monthly"
+  end
+
+  it "maps #memo to 'memo'" do
+    request.to_hash["memo"].should == "some memo"
+  end
+
+  it "maps #sender_email to 'senderEmail'" do
+    request.to_hash["senderEmail"].should == "sender@site.com"
+  end
+
+  it "maps #pin_type to 'pinType'" do
+    request.to_hash["pinType"].should == "required"
+  end
+
+  it "maps #fees_payer to 'feesPayer'" do
+    request.to_hash["feesPayer"].should == "sender"
+  end
+
+  it "maps #display_max_total_amount to 'displayMaxTotalAmount'" do
+    request.to_hash["displayMaxTotalAmount"].should == "false"
+  end
+
   it "includes 'en_US' as the 'errorLanguage'" do
     request.to_hash["requestEnvelope.errorLanguage"].should == "en_US"
   end
-
-=begin
-  specify do
-    client = AdaptivePayments::Client.new(
-      :user_id   => "flippa_1315388651_biz_api1.w3style.co.uk",
-      :password  => "1315388689",
-      :signature => "AFcWxV21C7fd0v3bYYYRCpSSRl31ASlDO-TqoptjRqW7Zoce9M6ujYrE",
-      :app_id    => "APP-80W284485P519543T",
-      :device_ip => "127.0.0.1",
-      :sandbox   => true
-    )
-
-    request = AdaptivePayments::PreapprovalRequest.new(
-      :ending_date      => DateTime.now + 365,
-      :starting_date    => DateTime.now,
-      :max_total_amount => 720,
-      :currency_code    => "USD",
-      :cancel_url       => "https://flippa.chris.vm/",
-      :return_url       => "https://flippa.chris.vm/",
-      :error_language   => "en_US"
-    )
-
-    puts client.execute(request)
-  end
-=end
 end

@@ -28,14 +28,12 @@ module AdaptivePayments
         "https://svcs.paypal.com/AdaptivePayments"
       end
 
-      require "logger"
-      RestClient.log = Logger.new(STDOUT)
-
       resource = RestClient::Resource.new(base_url, :headers => headers)
       response = resource[request.class.operation.to_s].post(
         request.to_hash
       )
-      response.to_s
+
+      request.class.build_response(response)
     end
 
     private
@@ -46,6 +44,7 @@ module AdaptivePayments
         "X-PAYPAL-REQUEST-DATA-FORMAT"  => "NV"
       }
       attributes.inject(base_headers) do |hash, (attr, value)|
+        next hash if value.nil?
         hash.merge(self.class.attributes[attr].options[:header] => value)
       end
     end

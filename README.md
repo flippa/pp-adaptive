@@ -26,7 +26,7 @@ Via rubygems:
       :sandbox       => false
     )
 
-    result = client.execute(AdaptivePayments::PreapprovalRequest.new(
+    response = client.execute(AdaptivePayments::PreapprovalRequest.new(
       :ending_date      => DateTime.now.next_year,
       :starting_date    => DateTime.now,
       :max_total_amount => BigDecimal("950.00"),
@@ -34,5 +34,11 @@ Via rubygems:
       :cancel_url       => "http://site.com/cancelled",
       :return_url       => "http://site.com/completed"
     ))
+    
+    if response.ack_code == "Success"
+      puts "Preapproval key = #{response.preapproval_key}"
+    else
+      puts "Request failed: #{response.ack_code}"
+    end
 
-(To be continued....)
+(Work in progress...)

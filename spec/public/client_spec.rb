@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe AdaptivePayments::Client do
   let(:rest_client)   { double(:post => nil).tap { |d| d.stub(:[] => d) } }
-  let(:request_class) { stub(:operation => :Test) }
+  let(:request_class) { stub(:operation => :Test, :build_response => nil) }
   let(:request)       { stub(:class => request_class, :to_hash => {}) }
   let(:client)        { AdaptivePayments::Client.new }
 
@@ -13,6 +13,14 @@ describe AdaptivePayments::Client do
   it "uses the production endpoint by default" do
     RestClient::Resource.should_receive(:new) \
       .with("https://svcs.paypal.com/AdaptivePayments", an_instance_of(Hash)) \
+      .and_return(rest_client)
+    client.execute(request)
+  end
+
+  it "uses the sandbox when sandbox? is true" do
+    client.sandbox = true
+    RestClient::Resource.should_receive(:new) \
+      .with("https://svcs.sandbox.paypal.com/AdaptivePayments", an_instance_of(Hash)) \
       .and_return(rest_client)
     client.execute(request)
   end
@@ -67,5 +75,11 @@ describe AdaptivePayments::Client do
     request.class.stub(:operation => :Preapproval)
     rest_client.should_receive(:[]).with("Preapproval")
     client.execute(request)
+  end
+
+  it "uses the request class to build a response" do
+    response = stub(:response)
+    request_class.should_receive(:build_response).and_return(response)
+    client.execute(request).should == response
   end
 end
