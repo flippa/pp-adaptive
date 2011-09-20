@@ -1,0 +1,6 @@
+require "virtus"
+require "rest-client"
+require "adaptive_payments/version"
+require "adaptive_payments/client"
+require "adaptive_payments/abstract_request"
+require "adaptive_payments/preapproval_request"
