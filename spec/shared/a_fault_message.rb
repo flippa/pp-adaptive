@@ -2,7 +2,10 @@ require "spec_helper"
 
 shared_examples "a FaultMessage" do
   let(:response) do
-    described_class.new("error(0).errorId=1234&error(0).domain=PLATFORM&error(0).subdomain=Application&error(0).severity=Error&error(0).category=Application&error(0).message=An+error+message&error(0).parameter=X-HEADER-FIELD")
+    described_class.new(
+      "error(0).errorId=1234&error(0).domain=PLATFORM&error(0).subdomain=Application&error(0).severity=Error" +
+      "&error(0).category=Application&error(0).message=An+error+message&error(0).parameter=X-HEADER-FIELD"
+    )
   end
 
   it "maps 'error(0).errorId' to #error_id" do
