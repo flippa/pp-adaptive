@@ -29,10 +29,7 @@ module AdaptivePayments
       end
 
       resource = RestClient::Resource.new(base_url, :headers => headers)
-      response = resource[request.class.operation.to_s].post(
-        request.to_hash
-      )
-
+      response = resource[request.class.operation.to_s].post(request.to_hash)
       request.class.build_response(response)
     end
 
