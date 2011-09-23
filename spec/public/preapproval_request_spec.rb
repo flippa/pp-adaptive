@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe AdaptivePayments::PreapprovalRequest do
+  it_behaves_like "a RequestEnvelope"
+
   subject         { AdaptivePayments::PreapprovalRequest }
   its(:operation) { should == :Preapproval }
 
@@ -15,7 +17,7 @@ describe AdaptivePayments::PreapprovalRequest do
       :ipn_notification_url     => "http://site.com/ipn",
       :date_of_month            => 15,
       :day_of_week              => "friday",
-      :max_amount_per_request   => 60,
+      :max_amount_per_payment   => 60,
       :max_payments             => 12,
       :max_payments_per_period  => 1,
       :payment_period           => "monthly",
@@ -63,8 +65,8 @@ describe AdaptivePayments::PreapprovalRequest do
     request.to_hash["dayOfWeek"].should == "friday"
   end
 
-  it "maps #max_amount_per_request to 'maxAmountPerRequest'" do
-    request.to_hash["maxAmountPerRequest"].should == "60.00"
+  it "maps #max_amount_per_payment to 'maxAmountPerPayment'" do
+    request.to_hash["maxAmountPerPayment"].should == "60.00"
   end
 
   it "maps #max_payments to 'maxNumberOfPayments'" do
@@ -100,11 +102,7 @@ describe AdaptivePayments::PreapprovalRequest do
   end
 
   it "does not include omitted parameters" do
-    request.max_amount_per_request = nil
-    request.to_hash.should_not have_key("maxAmountPerRequest")
-  end
-
-  it "includes 'en_US' as the 'errorLanguage'" do
-    request.to_hash["requestEnvelope.errorLanguage"].should == "en_US"
+    request.max_amount_per_payment = nil
+    request.to_hash.should_not have_key("maxAmountPerPayment")
   end
 end

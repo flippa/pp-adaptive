@@ -1,5 +1,4 @@
-require "adaptive_payments/response_envelope"
-require "adaptive_payments/fault_message"
+require "virtus"
 
 module AdaptivePayments
   class AbstractResponse

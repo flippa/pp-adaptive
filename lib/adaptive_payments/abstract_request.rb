@@ -1,6 +1,9 @@
+require "virtus"
+
 module AdaptivePayments
   class AbstractRequest
     include Virtus
+    include RequestEnvelope
 
     class << self
       def operation(name = nil)

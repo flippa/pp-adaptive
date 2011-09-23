@@ -1,3 +1,6 @@
+require "rest-client"
+require "virtus"
+
 module AdaptivePayments
   class Client
     include Virtus
