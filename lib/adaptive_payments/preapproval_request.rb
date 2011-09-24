@@ -20,12 +20,5 @@ module AdaptivePayments
     attribute :pin_type,                 String,   :param => "pinType"
     attribute :fees_payer,               String,   :param => "feesPayer"
     attribute :display_max_total_amount, Boolean,  :param => "displayMaxTotalAmount"
-
-    def to_hash
-      hash = super
-      hash[param_key(:max_total_amount)]       = "%.2f" % max_total_amount       unless max_total_amount.nil?
-      hash[param_key(:max_amount_per_payment)] = "%.2f" % max_amount_per_payment unless max_amount_per_payment.nil?
-      hash
-    end
   end
 end
