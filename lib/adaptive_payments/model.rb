@@ -85,10 +85,16 @@ module AdaptivePayments
         end
 
         # arrays next
-        attributes.select{ |k, v| v.kind_of?(List) }.each do |key, value|
+        attributes.select{ |k, v| v.kind_of?(Array) }.each do |key, value|
           next unless param = map.invert[key]
-          extract_array_of_hashes_with_key(param, hash).each do |sub_hash|
-            value.insert_from_hash(sub_hash)
+          if value.kind_of?(List)
+            extract_array_of_hashes_with_key(param, hash).each do |sub_hash|
+              value.insert_from_hash(sub_hash)
+            end
+          else
+            extract_array_of_values_with_key(param, hash).each do |v|
+              value << v
+            end
           end
         end
 
@@ -107,6 +113,11 @@ module AdaptivePayments
           next result unless match = pattern.match(k)
           result.merge(match[1] => v)
         end
+      end
+
+      def extract_array_of_values_with_key(key, hash)
+        pattern = /^(#{Regexp.escape(key)}\(\d+\))$/
+        hash.select{ |k, v| pattern.match(k) }.values
       end
 
       def extract_array_of_hashes_with_key(key, hash)

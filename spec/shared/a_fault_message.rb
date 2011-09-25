@@ -9,7 +9,9 @@ shared_examples "a FaultMessage" do
       "error(0).severity=Error",
       "error(0).category=Application",
       "error(0).message=An+error+message",
-      "error(0).parameter=X-HEADER-FIELD"
+      "error(0).parameter(0)=X-HEADER-FIELD",
+      "error(0).parameter(1)=X-OTHER-FIELD",
+      "error(1).errorId=2345"
     ].join("&"))
   end
 
@@ -37,7 +39,15 @@ shared_examples "a FaultMessage" do
     response.error_message.should == "An error message"
   end
 
-  it "maps 'error(0).parameter' to #error_parameter" do
-    response.error_parameter.should == "X-HEADER-FIELD"
+  it "maps 'error(0).parameter(0)' to #error_parameters.first" do
+    response.error_parameters.first.should == "X-HEADER-FIELD"
+  end
+
+  it "maps 'error(0).parameter(1)' to #error_parameters.last" do
+    response.error_parameters.last.should == "X-OTHER-FIELD"
+  end
+
+  it "allows access to additional errors via #errors" do
+    response.errors.last.id.should == 2345
   end
 end
