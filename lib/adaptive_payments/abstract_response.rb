@@ -1,5 +1,3 @@
-require "virtus"
-
 module AdaptivePayments
   class AbstractResponse < Model
     include ResponseEnvelope
