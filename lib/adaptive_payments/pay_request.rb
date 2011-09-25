@@ -14,6 +14,9 @@ module AdaptivePayments
     attribute :return_url,                         String,  :param => "returnUrl"
     attribute :ipn_notification_url,               String,  :param => "ipnNotificationUrl"
     attribute :sender_email,                       String,  :param => "sender.email"
+    attribute :sender_phone_country_code,          String,  :param => "sender.phone.countryCode"
+    attribute :sender_phone_number,                String,  :param => "sender.phone.phoneNumber"
+    attribute :sender_phone_extension,             String,  :param => "sender.phone.extension"
     attribute :preapproval_key,                    String,  :param => "preapprovalKey"
     attribute :pin,                                String
     attribute :reverse_parallel_payments_on_error, Boolean, :param => "reverseAllParallelPaymentsOnError"
@@ -31,12 +34,6 @@ module AdaptivePayments
     def_delegator :first_receiver, :payment_subtype
     def_delegator :first_receiver, :invoice_id=
     def_delegator :first_receiver, :invoice_id
-
-    # FIXME: I think this can go away?
-    def initialize(attributes = {})
-      super
-      first_receiver # initialize the primary receiver
-    end
 
     def receivers=(list_of_receivers) # FIXME: This is why we need a proper Attribute for this
       list_of_receivers.each { |r| receivers << r }

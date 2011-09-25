@@ -11,8 +11,8 @@ module AdaptivePayments
     attribute :sender_fees_currency_code, String,  :param => "defaultFundingPlan.senderFees.code"
     attribute :pay_errors,                Object,  :param => "payErrorList.payError", :default => lambda { |obj, attr| List.new(PayError) }
 
-    # Add backupFundingSource
-    # add charge(0..n) for each funding source
-    # add currencyConversion
+    # FIXME: Add backupFundingSource
+    # FIXME: add charge(0..n) for each funding source
+    # FIXME: add currencyConversion
   end
 end

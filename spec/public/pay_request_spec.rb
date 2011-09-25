@@ -8,20 +8,23 @@ describe AdaptivePayments::PayRequest do
 
   let(:request) do
     AdaptivePayments::PayRequest.new(
-      :receivers            => [ { :email => "receiver1@site.com", :amount => 20 }, { :email => "receiver2@site.com", :amount => 5, :primary => true } ],
-      :action_type          => "PAY",
-      :payment_type         => "DIGITALGOODS",
-      :invoice_id           => "42",
-      :preapproval_key      => "ABCD-1234",
-      :pin                  => "1234",
-      :currency_code        => "USD",
-      :cancel_url           => "http://site.com/cancelled",
-      :return_url           => "http://site.com/success",
-      :ipn_notification_url => "http://site.com/ipn",
-      :sender_email         => "sender@site.com",
+      :receivers                 => [ { :email => "receiver1@site.com", :amount => 20 }, { :email => "receiver2@site.com", :amount => 5, :primary => true } ],
+      :action_type               => "PAY",
+      :payment_type              => "DIGITALGOODS",
+      :invoice_id                => "42",
+      :preapproval_key           => "ABCD-1234",
+      :pin                       => "1234",
+      :currency_code             => "USD",
+      :cancel_url                => "http://site.com/cancelled",
+      :return_url                => "http://site.com/success",
+      :ipn_notification_url      => "http://site.com/ipn",
+      :sender_email              => "sender@site.com",
+      :sender_phone_country_code => "61",
+      :sender_phone_number       => "0431300200",
+      :sender_phone_extension    => "033",
       :reverse_parallel_payments_on_error => false,
-      :tracking_id          => "anything.id",
-      :memo                 => "a personal note"
+      :tracking_id               => "anything.id",
+      :memo                       => "a personal note"
     )
   end
 
@@ -63,6 +66,11 @@ describe AdaptivePayments::PayRequest do
     request.to_hash["receiverList.receiver(0).amount"].should == "30.00"
   end
 
+  it "allows setting the first receiver phone number with #receivers.first.phone_number" do
+    request.receivers.first.phone_number = "0431301201"
+    request.to_hash["receiverList.receiver(0).phone.phoneNumber"].should == "0431301201"
+  end
+
   it "maps #action_type to 'actionType'" do
     request.to_hash["actionType"].should == "PAY"
   end
@@ -93,6 +101,18 @@ describe AdaptivePayments::PayRequest do
 
   it "maps #sender_email to 'sender.email'" do
     request.to_hash["sender.email"].should == "sender@site.com"
+  end
+
+  it "maps #sender_phone_country_code to 'sender.phone.countryCode'" do
+    request.to_hash["sender.phone.countryCode"].should == "61"
+  end
+
+  it "maps #sender_phone_number to 'sender.phone.phoneNumber'" do
+    request.to_hash["sender.phone.phoneNumber"].should == "0431300200"
+  end
+
+  it "maps #sender_phone_extension to 'sender.phone.extension'" do
+    request.to_hash["sender.phone.extension"].should == "033"
   end
 
   it "maps #reverse_parallel_payments_on_error to 'reverseAllParallelPaymentsOnError'" do
