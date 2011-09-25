@@ -5,7 +5,7 @@ describe AdaptivePayments::PreapprovalDetailsResponse do
   it_behaves_like "a FaultMessage"
 
   let(:response) do
-    AdaptivePayments::PreapprovalDetailsResponse.new([
+    AdaptivePayments::PreapprovalDetailsResponse.from_string([
       "approved=false",
       "cancelUrl=http%3A%2F%2Fsite.com%2Fcancelled",
       "returnUrl=http%3A%2F%2Fsite.com%2Fsuccess",

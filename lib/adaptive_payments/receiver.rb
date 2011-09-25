@@ -1,5 +1,5 @@
 module AdaptivePayments
-  class Receiver < RequestModel
+  class Receiver < Model
     include Phone
 
     attribute :email,           String

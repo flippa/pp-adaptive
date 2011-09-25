@@ -2,12 +2,15 @@ require "spec_helper"
 
 shared_examples "a ResponseEnvelope" do
   let(:response) do
-    described_class.new(
-      "responseEnvelope.ack=Success&responseEnvelope.build=123456&responseEnvelope.timestamp=2011-09-21T00:00:00+00:00&responseEnvelope.correlationId=1234"
-    )
+    described_class.from_string([
+      "responseEnvelope.ack=Success",
+      "responseEnvelope.build=123456",
+      "responseEnvelope.timestamp=2011-09-21T00:00:00+00:00",
+      "responseEnvelope.correlationId=1234"
+    ].join("&"))
   end
 
-  it "maps 'responseEnvelope.ack' to #ack_code" do
+  it "maps 'responseEnvelope.ack' to #ack_code" do # 
     response.ack_code.should == "Success"
   end
 

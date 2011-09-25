@@ -7,7 +7,7 @@ module AdaptivePayments
 
     operation :Pay
 
-    attribute :receivers,                          Array,   :param => "receiverList.receiver", :default => []
+    attribute :receivers,                          Array,   :param => "receiverList.receiver", :default => lambda { |obj, attr| [] }
     attribute :action_type,                        String,  :param => "actionType"
     attribute :currency_code,                      String,  :param => "currencyCode"
     attribute :cancel_url,                         String,  :param => "cancelUrl"

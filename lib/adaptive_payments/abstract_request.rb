@@ -1,5 +1,5 @@
 module AdaptivePayments
-  class AbstractRequest < RequestModel
+  class AbstractRequest < Model
     include RequestEnvelope
 
     class << self
@@ -10,7 +10,7 @@ module AdaptivePayments
 
       def build_response(string)
         klass = AdaptivePayments.const_get(operation.to_s + "Response")
-        klass.new(string)
+        klass.from_string(string.to_s)
       end
     end
   end
