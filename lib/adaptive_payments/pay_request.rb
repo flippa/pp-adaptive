@@ -17,11 +17,13 @@ module AdaptivePayments
     attribute :sender_phone_country_code,          String,  :param => "sender.phone.countryCode"
     attribute :sender_phone_number,                String,  :param => "sender.phone.phoneNumber"
     attribute :sender_phone_extension,             String,  :param => "sender.phone.extension"
+    attribute :use_sender_credentials,             Boolean, :param => "sender.useCredentials"
     attribute :preapproval_key,                    String,  :param => "preapprovalKey"
     attribute :pin,                                String
     attribute :reverse_parallel_payments_on_error, Boolean, :param => "reverseAllParallelPaymentsOnError"
     attribute :tracking_id,                        String,  :param => "trackingId"
     attribute :memo,                               String
+    attribute :allowed_funding_types,              Object,  :param => "fundingConstraint.allowedFundingType.fundingTypeInfo", :default => lambda { |obj, attr| List.new(FundingTypeInfo) }
 
     def_delegator :first_receiver, :email=,  :receiver_email=
     def_delegator :first_receiver, :email,   :receiver_email
@@ -39,14 +41,15 @@ module AdaptivePayments
       list_of_receivers.each { |r| receivers << r }
     end
 
+    def allowed_funding_types=(list_of_types)
+      list_of_types.each { |t| allowed_funding_types << t }
+    end
+
     private
 
     def first_receiver
       receivers[0] ||= Receiver.new
     end
-
-    # FIXME: Add sender.phone
-    # FIXME: Add funding options stuff
 
     # For explicit approval, redirect the user to https://www.paypal.com/webscr?cmd=_ap-payment&paykey=value
     # When paying for DIGITALGOODS, use https://paypal.com/webapps/adaptivepayment/flow/pay?paykey=

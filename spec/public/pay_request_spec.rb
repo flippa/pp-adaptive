@@ -11,6 +11,7 @@ describe AdaptivePayments::PayRequest do
       :receivers                 => [ { :email => "receiver1@site.com", :amount => 20 }, { :email => "receiver2@site.com", :amount => 5, :primary => true } ],
       :action_type               => "PAY",
       :payment_type              => "DIGITALGOODS",
+      :allowed_funding_types     => ["CREDITCARD", "BALANCE"],
       :invoice_id                => "42",
       :preapproval_key           => "ABCD-1234",
       :pin                       => "1234",
@@ -24,7 +25,7 @@ describe AdaptivePayments::PayRequest do
       :sender_phone_extension    => "033",
       :reverse_parallel_payments_on_error => false,
       :tracking_id               => "anything.id",
-      :memo                       => "a personal note"
+      :memo                      => "a personal note"
     )
   end
 
@@ -50,6 +51,14 @@ describe AdaptivePayments::PayRequest do
 
   it "maps #payment_type to 'receiverList.receiver(0).paymentType'" do
     request.to_hash["receiverList.receiver(0).paymentType"].should == "DIGITALGOODS"
+  end
+
+  it "maps #allowed_funding_types.first to 'fundingConstraint.allowedFundingType.fundingTypeInfo(0).fundingType'" do
+    request.to_hash["fundingConstraint.allowedFundingType.fundingTypeInfo(0).fundingType"].should == "CREDITCARD"
+  end
+
+  it "maps #allowed_funding_types.last to 'fundingConstraint.allowedFundingType.fundingTypeInfo(1).fundingType'" do
+    request.to_hash["fundingConstraint.allowedFundingType.fundingTypeInfo(1).fundingType"].should == "BALANCE"
   end
 
   it "maps #invoice_id to 'receiverList.receiver(0).invoiceId'" do
