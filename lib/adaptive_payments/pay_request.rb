@@ -7,7 +7,7 @@ module AdaptivePayments
 
     operation :Pay
 
-    attribute :receivers,                          Array,   :param => "receiverList.receiver", :default => lambda { |obj, attr| [] }
+    attribute :receivers,                          Object,  :param => "receiverList.receiver", :default => lambda { |obj, attr| List.new(Receiver) }
     attribute :action_type,                        String,  :param => "actionType"
     attribute :currency_code,                      String,  :param => "currencyCode"
     attribute :cancel_url,                         String,  :param => "cancelUrl"
@@ -17,7 +17,7 @@ module AdaptivePayments
     attribute :preapproval_key,                    String,  :param => "preapprovalKey"
     attribute :pin,                                String
     attribute :reverse_parallel_payments_on_error, Boolean, :param => "reverseAllParallelPaymentsOnError"
-    attribute :tracking_id,                        String,  :param => "trackingID"
+    attribute :tracking_id,                        String,  :param => "trackingId"
     attribute :memo,                               String
 
     def_delegator :first_receiver, :email=,  :receiver_email=
@@ -32,9 +32,14 @@ module AdaptivePayments
     def_delegator :first_receiver, :invoice_id=
     def_delegator :first_receiver, :invoice_id
 
+    # FIXME: I think this can go away?
     def initialize(attributes = {})
       super
       first_receiver # initialize the primary receiver
+    end
+
+    def receivers=(list_of_receivers) # FIXME: This is why we need a proper Attribute for this
+      list_of_receivers.each { |r| receivers << r }
     end
 
     private
