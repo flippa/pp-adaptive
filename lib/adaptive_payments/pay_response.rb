@@ -10,9 +10,12 @@ module AdaptivePayments
     attribute :sender_fees_amount,        Decimal, :param => "defaultFundingPlan.senderFees.amount"
     attribute :sender_fees_currency_code, String,  :param => "defaultFundingPlan.senderFees.code"
     attribute :pay_errors,                Object,  :param => "payErrorList.payError", :default => lambda { |obj, attr| List.new(PayError) }
-
-    # FIXME: Add backupFundingSource
-    # FIXME: add charge(0..n) for each funding source
-    # FIXME: add currencyConversion
+    attribute :backup_funding_source,     Object,  :param => "defaultFundingPlan.backupFundingSource", :default => lambda { |obj, attr| FundingSource.new  }
+    attribute :from_currency_amount,      Decimal, :param => "defaultFundingPlan.currencyConversion.from.amount"
+    attribute :from_currency_code,        String,  :param => "defaultFundingPlan.currencyConversion.from.code"
+    attribute :to_currency_amount,        Decimal, :param => "defaultFundingPlan.currencyConversion.to.amount"
+    attribute :to_currency_code,          String,  :param => "defaultFundingPlan.currencyConversion.to.code"
+    attribute :exchange_rate,             Decimal, :param => "defaultFundingPlan.currencyConversion.exchangeRate"
+    attribute :charges,                   Object,  :param => "defaultFundingPlan.charge", :default => lambda { |obj, attr| List.new(FundingPlanCharge) }
   end
 end

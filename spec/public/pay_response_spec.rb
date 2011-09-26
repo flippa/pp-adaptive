@@ -13,6 +13,19 @@ describe AdaptivePayments::PayResponse do
       "defaultFundingPlan.fundingAmount.code=USD",
       "defaultFundingPlan.senderFees.amount=6.00",
       "defaultFundingPlan.senderFees.code=USD",
+      "defaultFundingPlan.backupFundingSource.fundingSourceId=9876",
+      "defaultFundingPlan.backupFundingSource.lastFourOfAccountNumber=0000",
+      "defaultFundingPlan.backupFundingSource.displayName=Primary+Account",
+      "defaultFundingPlan.backupFundingSource.type=CREDITCARD",
+      "defaultFundingPlan.backupFundingSource.allowed=TRUE",
+      "defaultFundingPlan.currencyConversion.from.amount=83.33",
+      "defaultFundingPlan.currencyConversion.from.code=GBP",
+      "defaultFundingPlan.currencyConversion.to.amount=100.00",
+      "defaultFundingPlan.currencyConversion.to.code=USD",
+      "defaultFundingPlan.currencyConversion.exchangeRate=0.8333",
+      "defaultFundingPlan.charge(0).charge.amount=5.00",
+      "defaultFundingPlan.charge(0).charge.code=USD",
+      "defaultFundingPlan.charge(0).fundingSource.fundingSourceId=1234",
       "payErrorList.payError(0).receiver.email=bob@site.com",
       "payErrorList.payError(0).receiver.amount=5.00",
       "payErrorList.payError(0).error.domain=APPLICATION",
@@ -50,6 +63,58 @@ describe AdaptivePayments::PayResponse do
 
   it "maps 'defaultFundingPlan.senderFees.code' to #sender_fees_currency_code" do
     response.sender_fees_currency_code.should == "USD"
+  end
+
+  it "maps 'defaultFundingPlan.backupFundingSource.fundingSourceId' to #backup_funding_source.id" do
+    response.backup_funding_source.id.should == "9876"
+  end
+
+  it "maps 'defaultFundingPlan.backupFundingSource.lastFourOfAccountNumber' to #backup_funding_source.last_four_digits_of_account" do
+    response.backup_funding_source.last_four_digits_of_account.should == "0000"
+  end
+
+  it "maps 'defaultFundingPlan.backupFundingSource.displayName' to #backup_funding_source.display_name" do
+    response.backup_funding_source.display_name.should == "Primary Account"
+  end
+
+  it "maps 'defaultFundingPlan.backupFundingSource.type' to #backup_funding_source.type" do
+    response.backup_funding_source.type.should == "CREDITCARD"
+  end
+
+  it "maps 'defaultFundingPlan.backupFundingSource.allowed' to #backup_funding_source.allowed? " do
+    response.backup_funding_source.should be_allowed
+  end
+
+  it "maps 'defaultFundingPlan.currencyConversion.from.amount' to #from_currency_amount" do
+    response.from_currency_amount.should == BigDecimal("83.33")
+  end
+
+  it "maps 'defaultFundingPlan.currencyConversion.from.code' to #from_currency_code" do
+    response.from_currency_code.should == "GBP"
+  end
+
+  it "maps 'defaultFundingPlan.currencyConversion.to.amount' to #to_currency_amount" do
+    response.to_currency_amount.should == BigDecimal("100.00")
+  end
+
+  it "maps 'defaultFundingPlan.currencyConversion.to.code' to #to_currency_code" do
+    response.to_currency_code.should == "USD"
+  end
+
+  it "maps 'defaultFundingPlan.currencyConversion.exchangeRate' to #exchange_rate" do
+    response.exchange_rate.should == BigDecimal("0.8333")
+  end
+
+  it "maps 'defaultFundingPlan.charge(0).charge.amount to #charges.first.amount" do
+    response.charges.first.amount.should == BigDecimal("5.00")
+  end
+
+  it "maps 'defaultFundingPlan.charge(0).charge.code to #charges.first.currency_code" do
+    response.charges.first.currency_code.should == "USD"
+  end
+
+  it "maps 'defaultFundingPlan.charge(0).fundingSource.fundingSourceId to #charges.first.funding_source.id" do
+    response.charges.first.funding_source.id.should == "1234"
   end
 
   it "maps 'payErrorList.payError(0).receiver.email to #pay_errors.first.receiver.email" do

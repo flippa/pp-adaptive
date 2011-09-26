@@ -1,5 +1,7 @@
 module AdaptivePayments
   class PreapprovalRequest < AbstractRequest
+    include ClientDetails
+
     operation :Preapproval
 
     attribute :ending_date,              DateTime, :param => "endingDate"
