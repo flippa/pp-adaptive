@@ -1,6 +1,14 @@
 # A Ruby API for PayPal Adaptive Payments
 
-  - Current Status: Closed Source Work in Progress
+  - Current Status: Work-in-progress (don't use, API subject to major change)
+  - Working:
+    - setting up an explicit preapproval
+    - processing payments (for an explicit preapproval)
+  - Not working:
+    - executing pre-created payments
+    - changing options on a created payment
+    - refunds/cancellations
+    - minor things like currency conversion requests
 
 This gem provides access to PayPal's Adaptive Payments API using easy-to-use
 ruby classes.  The internals are largely backed by
