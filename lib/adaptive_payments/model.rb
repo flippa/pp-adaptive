@@ -4,15 +4,13 @@ module AdaptivePayments
   class Model
     include Virtus
 
-    class << self
-      def from_string(string)
-        require 'uri'
-        hash = string.split("&").inject({}) do |result, pair|
-          key, value = pair.split("=").map { |v| URI.decode(v.gsub("+", "%20")) }
-          result.merge(key => value)
-        end
-        new.tap { |m| m.load_hash(hash) }
+    def self.from_string(string)
+      require 'uri'
+      hash = string.split("&").inject({}) do |result, pair|
+        key, value = pair.split("=").map { |v| URI.decode(v.gsub("+", "%20")) }
+        result.merge(key => value)
       end
+      new.tap { |m| m.load_hash(hash) }
     end
 
     module Writing

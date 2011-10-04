@@ -3,11 +3,9 @@ module AdaptivePayments
     include ResponseEnvelope
     include FaultMessage
 
-    class << self
-      def operation(name = nil)
-        @operation = name unless name.nil?
-        @operation
-      end
+    def self.operation(name = nil)
+      @operation = name unless name.nil?
+      @operation
     end
   end
 end
