@@ -7,8 +7,6 @@ module AdaptivePayments
           attribute :error_language,  String, :param => "requestEnvelope.errorLanguage", :default => "en_US"
         end
       end
-
-      alias_method :extended, :included
     end
   end
 end
