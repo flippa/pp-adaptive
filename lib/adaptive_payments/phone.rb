@@ -8,8 +8,6 @@ module AdaptivePayments
           attribute :phone_extension,    String, :param => "phone.extension"
         end
       end
-
-      alias_method :extended, :included
     end
   end
 end

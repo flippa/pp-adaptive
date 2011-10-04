@@ -14,8 +14,6 @@ module AdaptivePayments
           end
         end
       end
-
-      alias_method :extended, :included
     end
   end
 end
