@@ -13,8 +13,6 @@ module AdaptivePayments
           attribute :client_customer_id,    String, :param => "clientDetails.customerId"
         end
       end
-
-      alias_method :extended, :included
     end
   end
 end

@@ -18,8 +18,6 @@ module AdaptivePayments
           def_delegator :first_error, :parameters, :error_parameters
         end
       end
-
-      alias_method :extended, :included
     end
 
     def first_error
