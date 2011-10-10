@@ -23,7 +23,7 @@ describe AdaptivePayments::Node do
   end
 
   describe "coercion" do
-    let(:object) { model.new.tap { |o| o.child = { :example => "anything" } } }
+    let(:object) { model.new(:child => { :example => "anything" }) }
 
     it "coerces hash to instances of the given type" do
       object.child.should be_an_instance_of(child_model)
@@ -36,7 +36,7 @@ describe AdaptivePayments::Node do
 
   describe "#to_json" do
     context "when not empty" do
-      let(:json) { model.new.tap { |o| o.child.example = "whatever" }.to_json }
+      let(:json) { model.new(:child => { :example => "whatever" }).to_json }
 
       it "is present as a child in the output" do
         json.should == '{"child":{"example":"whatever"}}'

@@ -40,7 +40,7 @@ describe AdaptivePayments::NodeList do
 
   describe "#to_json" do
     context "when not empty" do
-      let(:json) { model.new.tap { |o| o.children = [{ :example => "whatever" }] }.to_json }
+      let(:json) { model.new(:children => [{ :example => "whatever" }]).to_json }
 
       it "is present as a child in the output" do
         json.should == '{"children":[{"example":"whatever"}]}'

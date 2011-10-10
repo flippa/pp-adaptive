@@ -28,6 +28,8 @@ module AdaptivePayments
           value.to_hash
         when CoercedArray
           value.collect { |v| v.to_hash }
+        when BigDecimal, Float
+          "%.2f" % value
         else
           value
       end
