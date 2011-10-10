@@ -20,5 +20,6 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency     "rest-client"
   s.add_runtime_dependency     "virtus",      ">= 0.0.8"
+  s.add_runtime_dependency     "json"
   s.add_development_dependency "rspec",       ">= 2.6"
 end

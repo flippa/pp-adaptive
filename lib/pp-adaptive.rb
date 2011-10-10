@@ -21,3 +21,10 @@ require "adaptive_payments/preapproval_request"
 require "adaptive_payments/preapproval_response"
 require "adaptive_payments/preapproval_details_request"
 require "adaptive_payments/preapproval_details_response"
+
+
+require "adaptive_payments/json_model"
+require "adaptive_payments/coerced_array"
+require "adaptive_payments/node"
+require "adaptive_payments/node_list"
+require "adaptive_payments/client_details_type"
