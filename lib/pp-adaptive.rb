@@ -38,5 +38,6 @@ require "pp-adaptive/preapproval_details_request"
 require "pp-adaptive/preapproval_details_response"
 require "pp-adaptive/pay_request"
 require "pp-adaptive/pay_response"
+require "pp-adaptive/payment_details_request"
 
 require "pp-adaptive/client"
