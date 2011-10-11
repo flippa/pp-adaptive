@@ -13,11 +13,13 @@ describe AdaptivePayments::PreapprovalDetailsRequest do
     )
   end
 
-  it "maps #preapproval_key to 'preapprovalKey'" do
-    request.to_hash["preapprovalKey"].should == "ABCDEFG-1234"
+  let(:json) { JSON.parse(request.to_json) }
+
+  it "maps #preapproval_key to ['preapprovalKey']" do
+    json["preapprovalKey"].should == "ABCDEFG-1234"
   end
 
-  it "maps #get_billing_address to 'getBillingAddress'" do
-    request.to_hash["getBillingAddress"].should == "true"
+  it "maps #get_billing_address to ['getBillingAddress']" do
+    json["getBillingAddress"].should == true
   end
 end

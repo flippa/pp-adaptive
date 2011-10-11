@@ -1,48 +1,78 @@
-require "forwardable"
-
 module AdaptivePayments
   class PayRequest < AbstractRequest
-    extend  Forwardable
-    include ClientDetails
-
     operation :Pay
 
-    attribute :receivers,                          Object,  :param => "receiverList.receiver", :default => lambda { |obj, attr| List.new(Receiver) }
-    attribute :action_type,                        String,  :param => "actionType"
-    attribute :currency_code,                      String,  :param => "currencyCode"
-    attribute :cancel_url,                         String,  :param => "cancelUrl"
-    attribute :return_url,                         String,  :param => "returnUrl"
-    attribute :ipn_notification_url,               String,  :param => "ipnNotificationUrl"
-    attribute :sender_email,                       String,  :param => "sender.email"
-    attribute :sender_phone_country_code,          String,  :param => "sender.phone.countryCode"
-    attribute :sender_phone_number,                String,  :param => "sender.phone.phoneNumber"
-    attribute :sender_phone_extension,             String,  :param => "sender.phone.extension"
-    attribute :use_sender_credentials,             Boolean, :param => "sender.useCredentials"
-    attribute :preapproval_key,                    String,  :param => "preapprovalKey"
+    attribute :receiver_list,                      Node[ReceiverList],      :param => "receiverList"
+    attribute :action_type,                        String,                  :param => "actionType"
+    attribute :currency_code,                      String,                  :param => "currencyCode"
+    attribute :cancel_url,                         String,                  :param => "cancelUrl"
+    attribute :return_url,                         String,                  :param => "returnUrl"
+    attribute :ipn_notification_url,               String,                  :param => "ipnNotificationUrl"
+    attribute :sender,                             Node[SenderIdentifier]
+    attribute :preapproval_key,                    String,                  :param => "preapprovalKey"
     attribute :pin,                                String
-    attribute :reverse_parallel_payments_on_error, Boolean, :param => "reverseAllParallelPaymentsOnError"
-    attribute :tracking_id,                        String,  :param => "trackingId"
+    attribute :reverse_parallel_payments_on_error, Boolean,                 :param => "reverseAllParallelPaymentsOnError"
+    attribute :tracking_id,                        String,                  :param => "trackingId"
     attribute :memo,                               String
-    attribute :allowed_funding_types,              Object,  :param => "fundingConstraint.allowedFundingType.fundingTypeInfo", :default => lambda { |obj, attr| List.new(FundingTypeInfo) }
+    attribute :funding_constraint,                 Node[FundingConstraint], :param => "fundingConstraint"
+    attribute :client_details,                     Node[ClientDetailsType], :param => "clientDetails"
 
-    def_delegator :first_receiver, :email=,  :receiver_email=
-    def_delegator :first_receiver, :email,   :receiver_email
-    def_delegator :first_receiver, :amount=, :receiver_amount=
-    def_delegator :first_receiver, :amount,  :receiver_amount
+    alias_params :client_details, {
+      :client_ip_address     => :ip_address,
+      :client_device_id      => :device_id,
+      :client_application_id => :application_id,
+      :client_model          => :model,
+      :client_geo_location   => :geo_location,
+      :client_customer_type  => :customer_type,
+      :client_partner_name   => :partner_name,
+      :client_customer_id    => :customer_id
+    }
 
-    def_delegator :first_receiver, :payment_type=
-    def_delegator :first_receiver, :payment_type
-    def_delegator :first_receiver, :payment_subtype=
-    def_delegator :first_receiver, :payment_subtype
-    def_delegator :first_receiver, :invoice_id=
-    def_delegator :first_receiver, :invoice_id
+    alias_params :receiver_list, {
+      :receivers => :receivers
+    }
 
-    def receivers=(list_of_receivers) # FIXME: This is why we need a proper Attribute for this
-      list_of_receivers.each { |r| receivers << r }
+    alias_params :first_receiver, {
+      :receiver_email  => :email,
+      :receiver_amount => :amount,
+      :payment_type    => :payment_type,
+      :payment_subtype => :payment_subtype,
+      :invoice_id      => :invoice_id,
+      :receiver_phone  => :phone
+    }
+
+    alias_params :receiver_phone, {
+      :receiver_phone_number       => :phone_number,
+      :receiver_phone_country_code => :country_code,
+      :receiver_phone_extension    => :extension
+    }
+
+    alias_params :sender, {
+      :sender_email           => :email,
+      :sender_phone           => :phone,
+      :use_sender_credentials => :use_credentials
+    }
+
+    alias_params :sender_phone, {
+      :sender_phone_country_code => :country_code,
+      :sender_phone_number       => :phone_number,
+      :sender_phone_extension    => :extension
+    }
+
+    alias_params :funding_constraint, {
+      :allowed_funding_type => :allowed_funding_type
+    }
+
+    alias_params :allowed_funding_type, {
+      :allowed_funding_type_infos => :funding_type_infos
+    }
+
+    def allowed_funding_types
+      allowed_funding_type_infos.collect { |info| info[:funding_type] }
     end
 
     def allowed_funding_types=(list_of_types)
-      list_of_types.each { |t| allowed_funding_types << t }
+      self.allowed_funding_type_infos = list_of_types.map { |t| { :funding_type => t } }
     end
 
     private

@@ -1,20 +1,18 @@
-require "forwardable"
-
 module AdaptivePayments
   module FaultMessage
     def self.included(base)
       base.instance_eval do
-        extend Forwardable
+        attribute :errors, NodeList[ErrorData], :param => "error"
 
-        attribute :errors, Object, :param => "error", :default => lambda { |obj, attr| List.new(ErrorData) }
-
-        def_delegator :first_error, :id,         :error_id
-        def_delegator :first_error, :domain,     :error_domain
-        def_delegator :first_error, :subdomain,  :error_subdomain
-        def_delegator :first_error, :severity,   :error_severity
-        def_delegator :first_error, :category,   :error_category
-        def_delegator :first_error, :message,    :error_message
-        def_delegator :first_error, :parameters, :error_parameters
+        alias_params :first_error, {
+          :error_id         => :id,
+          :error_domain     => :domain,
+          :error_subdomain  => :subdomain,
+          :error_severity   => :severity,
+          :error_category   => :category,
+          :error_message    => :message,
+          :error_parameters => :parameters
+        }
       end
     end
 

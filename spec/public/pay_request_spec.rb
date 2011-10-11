@@ -29,110 +29,122 @@ describe AdaptivePayments::PayRequest do
     )
   end
 
-  it "maps #receivers.first.email to 'receiverList.receiver(0).email'" do
-    request.to_hash["receiverList.receiver(0).email"].should == "receiver1@site.com"
+  let(:json) { JSON.parse(request.to_json) }
+
+  it "maps #receivers.first.email to ['receiverList']['receiver'][0]['email']" do
+    json["receiverList"]["receiver"][0]["email"].should == "receiver1@site.com"
   end
 
-  it "maps #receivers.last.email to 'receiverList.receiver(1).email'" do
-    request.to_hash["receiverList.receiver(1).email"].should == "receiver2@site.com"
+  it "maps #receivers.last.email to ['receiverList']['receiver'][1]['email']" do
+    json["receiverList"]["receiver"][1]["email"].should == "receiver2@site.com"
   end
 
-  it "maps #receivers.first.amount to 'receiverList.receiver(0).amount'" do
-    request.to_hash["receiverList.receiver(0).amount"].should == "20.00"
+  it "maps #receivers.first.amount to ['receiverList']['receiver'][0]['amount']" do
+    json["receiverList"]["receiver"][0]["amount"].should == "20.00"
   end
 
-  it "maps #receivers.last.amount to 'receiverList.receiver(1).amount'" do
-    request.to_hash["receiverList.receiver(1).amount"].should == "5.00"
+  it "maps #receivers.last.amount to ['receiverList']['receiver'][1]['amount']" do
+    json["receiverList"]["receiver"][1]["amount"].should == "5.00"
   end
 
-  it "maps #receivers.last.primary to 'receiverList.receiver(1).primary'" do
-    request.to_hash["receiverList.receiver(1).primary"].should == "true"
+  it "maps #receivers.last.primary to ['receiverList']['receiver'][1]['primary']" do
+    json["receiverList"]["receiver"][1]["primary"].should == true
   end
 
-  it "maps #payment_type to 'receiverList.receiver(0).paymentType'" do
-    request.to_hash["receiverList.receiver(0).paymentType"].should == "DIGITALGOODS"
+  it "maps #payment_type to ['receiverList']['receiver'][0]['paymentType']" do
+    json["receiverList"]["receiver"][0]["paymentType"].should == "DIGITALGOODS"
   end
 
-  it "maps #allowed_funding_types.first to 'fundingConstraint.allowedFundingType.fundingTypeInfo(0).fundingType'" do
-    request.to_hash["fundingConstraint.allowedFundingType.fundingTypeInfo(0).fundingType"].should == "CREDITCARD"
+  it "maps #allowed_funding_types.first to ['fundingConstraint']['allowedFundingType']['fundingTypeInfo'][0]['fundingType']" do
+    json["fundingConstraint"]["allowedFundingType"]["fundingTypeInfo"][0]["fundingType"].should == "CREDITCARD"
   end
 
-  it "maps #allowed_funding_types.last to 'fundingConstraint.allowedFundingType.fundingTypeInfo(1).fundingType'" do
-    request.to_hash["fundingConstraint.allowedFundingType.fundingTypeInfo(1).fundingType"].should == "BALANCE"
+  it "maps #allowed_funding_types.last to ['fundingConstraint']['allowedFundingType']['fundingTypeInfo'][1]['fundingType']" do
+    json["fundingConstraint"]["allowedFundingType"]["fundingTypeInfo"][1]["fundingType"].should == "BALANCE"
   end
 
-  it "maps #invoice_id to 'receiverList.receiver(0).invoiceId'" do
-    request.to_hash["receiverList.receiver(0).invoiceId"].should == "42"
+  it "maps #invoice_id to ['receiverList']['receiver'][0]['invoiceId']" do
+    json["receiverList"]["receiver"][0]["invoiceId"].should == "42"
   end
 
   it "allows setting the first receiver email with #receiver_email" do
     request.receiver_email = "another@receiver.com"
-    request.to_hash["receiverList.receiver(0).email"].should == "another@receiver.com"
+    json["receiverList"]["receiver"][0]["email"].should == "another@receiver.com"
   end
 
   it "allows setting the first receiver amount with #receiver_amount" do
     request.receiver_amount = 30
-    request.to_hash["receiverList.receiver(0).amount"].should == "30.00"
+    json["receiverList"]["receiver"][0]["amount"].should == "30.00"
   end
 
-  it "allows setting the first receiver phone number with #receivers.first.phone_number" do
-    request.receivers.first.phone_number = "0431301201"
-    request.to_hash["receiverList.receiver(0).phone.phoneNumber"].should == "0431301201"
+  it "allows setting the first receiver phone number with #receiver_phone_number" do
+    request.receiver_phone_number = "0431301201"
+    json["receiverList"]["receiver"][0]["phone"]["phoneNumber"].should == "0431301201"
   end
 
-  it "maps #action_type to 'actionType'" do
-    request.to_hash["actionType"].should == "PAY"
+  it "allows setting the first receiver phone country code with #receiver_phone_country_code" do
+    request.receiver_phone_country_code = "61"
+    json["receiverList"]["receiver"][0]["phone"]["countryCode"].should == "61"
   end
 
-  it "maps #preapproval_key to 'preapprovalKey'" do
-    request.to_hash["preapprovalKey"].should == "ABCD-1234"
+  it "allows setting the first receiver phone extension with #receiver_phone_extension" do
+    request.receiver_phone_extension = "033"
+    json["receiverList"]["receiver"][0]["phone"]["extension"].should == "033"
   end
 
-  it "maps #pin to 'pin'" do
-    request.to_hash["pin"].should == "1234"
+  it "maps #action_type to ['actionType']" do
+    json["actionType"].should == "PAY"
   end
 
-  it "maps #currency_code to 'currencyCode'" do
-    request.to_hash["currencyCode"].should == "USD"
+  it "maps #preapproval_key to ['preapprovalKey']" do
+    json["preapprovalKey"].should == "ABCD-1234"
   end
 
-  it "maps #cancel_url to 'cancelUrl'" do
-    request.to_hash["cancelUrl"].should == "http://site.com/cancelled"
+  it "maps #pin to ['pin']" do
+    json["pin"].should == "1234"
   end
 
-  it "maps #return_url to 'returnUrl'" do
-    request.to_hash["returnUrl"].should == "http://site.com/success"
+  it "maps #currency_code to ['currencyCode']" do
+    json["currencyCode"].should == "USD"
   end
 
-  it "maps #ipn_notification_url to 'ipnNotificationUrl'" do
-    request.to_hash["ipnNotificationUrl"].should == "http://site.com/ipn"
+  it "maps #cancel_url to ['cancelUrl']" do
+    json["cancelUrl"].should == "http://site.com/cancelled"
   end
 
-  it "maps #sender_email to 'sender.email'" do
-    request.to_hash["sender.email"].should == "sender@site.com"
+  it "maps #return_url to ['returnUrl']" do
+    json["returnUrl"].should == "http://site.com/success"
   end
 
-  it "maps #sender_phone_country_code to 'sender.phone.countryCode'" do
-    request.to_hash["sender.phone.countryCode"].should == "61"
+  it "maps #ipn_notification_url to ['ipnNotificationUrl']" do
+    json["ipnNotificationUrl"].should == "http://site.com/ipn"
   end
 
-  it "maps #sender_phone_number to 'sender.phone.phoneNumber'" do
-    request.to_hash["sender.phone.phoneNumber"].should == "0431300200"
+  it "maps #sender_email to ['sender']['email']" do
+    json["sender"]["email"].should == "sender@site.com"
   end
 
-  it "maps #sender_phone_extension to 'sender.phone.extension'" do
-    request.to_hash["sender.phone.extension"].should == "033"
+  it "maps #sender_phone_country_code to ['sender']['phone']['countryCode']" do
+    json["sender"]["phone"]["countryCode"].should == "61"
   end
 
-  it "maps #reverse_parallel_payments_on_error to 'reverseAllParallelPaymentsOnError'" do
-    request.to_hash["reverseAllParallelPaymentsOnError"].should == "false"
+  it "maps #sender_phone_number to ['sender']['phone']['phoneNumber']" do
+    json["sender"]["phone"]["phoneNumber"].should == "0431300200"
   end
 
-  it "maps #tracking_id to 'trackingId'" do
-    request.to_hash["trackingId"].should == "anything.id"
+  it "maps #sender_phone_extension to ['sender']['phone']['extension']" do
+    json["sender"]["phone"]["extension"].should == "033"
+  end
+
+  it "maps #reverse_parallel_payments_on_error to ['reverseAllParallelPaymentsOnError']" do
+    json["reverseAllParallelPaymentsOnError"].should == false
+  end
+
+  it "maps #tracking_id to ['trackingId']" do
+    json["trackingId"].should == "anything.id"
   end
 
   it "maps #memo to 'memo'" do
-    request.to_hash["memo"].should == "a personal note"
+    json["memo"].should == "a personal note"
   end
 end

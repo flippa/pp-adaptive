@@ -1,17 +1,13 @@
 module AdaptivePayments
-  module ResponseEnvelope
-    def self.included(base)
-      base.instance_eval do
-        attribute :ack_code,        String,   :param => "responseEnvelope.ack"
-        attribute :build,           String,   :param => "responseEnvelope.build"
-        attribute :correlation_id,  String,   :param => "responseEnvelope.correlationId"
-        attribute :time,            DateTime, :param => "responseEnvelope.timestamp"
+  class ResponseEnvelope < JsonModel
+    attribute :ack_code,        String,   :param => "ack"
+    attribute :build,           String,   :param => "build"
+    attribute :correlation_id,  String,   :param => "correlationId"
+    attribute :time,            DateTime, :param => "timestamp"
 
-        ["Success", "Failure", "Warning", "SuccessWithWarning", "FailureWithWarning"].each do |ack|
-          method = ack.split(/(?=[A-Z])/).map{ |w| w.downcase }.join("_") + "?"
-          define_method(method) { ack_code == ack }
-        end
-      end
+    ["Success", "Failure", "Warning", "SuccessWithWarning", "FailureWithWarning"].each do |ack|
+      method = ack.split(/(?=[A-Z])/).map{ |w| w.downcase }.join("_") + "?"
+      define_method(method) { ack_code == ack }
     end
   end
 end

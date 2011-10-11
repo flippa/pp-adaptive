@@ -1,7 +1,11 @@
 module AdaptivePayments
-  class FundingPlanCharge < Model
-    attribute :amount,         Decimal, :param => "charge.amount"
-    attribute :currency_code,  String,  :param => "charge.code"
-    attribute :funding_source, Object,  :param => "fundingSource", :default => lambda { |obj, attr| FundingSource.new }
+  class FundingPlanCharge < JsonModel
+    attribute :charge,         Node[CurrencyType]
+    attribute :funding_source, Node[FundingSource], :param => "fundingSource"
+
+    alias_params :charge, {
+      :amount        => :amount,
+      :currency_code => :code
+    }
   end
 end

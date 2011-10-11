@@ -32,7 +32,11 @@ module AdaptivePayments
       end
 
       resource = RestClient::Resource.new(base_url, :headers => headers)
-      response = resource[request.class.operation.to_s].post(request.to_hash)
+      response = resource[request.class.operation.to_s].post(
+        request.to_json,
+        :content_type => :json,
+        :accept       => :json
+      )
       request.class.build_response(response)
     end
 
@@ -40,8 +44,8 @@ module AdaptivePayments
 
     def headers
       base_headers = {
-        "X-PAYPAL-RESPONSE-DATA-FORMAT" => "NV",
-        "X-PAYPAL-REQUEST-DATA-FORMAT"  => "NV"
+        "X-PAYPAL-RESPONSE-DATA-FORMAT" => "JSON",
+        "X-PAYPAL-REQUEST-DATA-FORMAT"  => "JSON"
       }
       attributes.inject(base_headers) do |hash, (attr, value)|
         next hash if value.nil?

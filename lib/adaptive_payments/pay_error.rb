@@ -1,24 +1,24 @@
-require "forwardable"
-
 module AdaptivePayments
-  class PayError < Model
-    extend Forwardable
+  class PayError < JsonModel
+    attribute :receiver, Node[Receiver]
+    attribute :error,    Node[ErrorData]
 
-    attribute :receiver,    Object, :default => lambda { |obj, attr| Receiver.new }
-    attribute :error,       Object, :default => lambda { |obj, attr| ErrorData.new }
+    alias_params :receiver, {
+      :receiver_email  => :email,
+      :receiver_amount => :amount,
+      :payment_type    => :payment_type,
+      :payment_subtype => :payment_subtype,
+      :invoice_id      => :invoice_id
+    }
 
-    def_delegator :receiver, :email,   :receiver_email
-    def_delegator :receiver, :amount,  :receiver_amount
-    def_delegator :receiver, :payment_type
-    def_delegator :receiver, :payment_subtype
-    def_delegator :receiver, :invoice_id
-
-    def_delegator :error, :id,        :error_id
-    def_delegator :error, :domain,    :error_domain
-    def_delegator :error, :subdomain, :error_subdomain
-    def_delegator :error, :severity,  :error_severity
-    def_delegator :error, :category,  :error_category
-    def_delegator :error, :message,   :error_message
-    def_delegator :error, :parameter, :error_parameter
+    alias_params :error, {
+      :error_id         => :id,
+      :error_domain     => :domain,
+      :error_subdomain  => :subdomain,
+      :error_severity   => :severity,
+      :error_category   => :category,
+      :error_message    => :message,
+      :error_parameters => :parameters
+    }
   end
 end

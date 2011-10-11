@@ -3,7 +3,7 @@ require "spec_helper"
 describe AdaptivePayments::Client do
   let(:rest_client)   { double(:post => nil).tap { |d| d.stub(:[] => d) } }
   let(:request_class) { stub(:operation => :Test, :build_response => nil) }
-  let(:request)       { stub(:class => request_class, :to_hash => {}) }
+  let(:request)       { stub(:class => request_class, :to_json => '{}') }
   let(:client)        { AdaptivePayments::Client.new }
 
   before(:each) do
@@ -57,16 +57,16 @@ describe AdaptivePayments::Client do
     client.execute(request)
   end
 
-  it "sets the request format to NV" do
+  it "sets the request format to JSON" do
     RestClient::Resource.should_receive(:new) \
-      .with(/^https:\/\/.*/, :headers => hash_including("X-PAYPAL-REQUEST-DATA-FORMAT" => "NV")) \
+      .with(/^https:\/\/.*/, :headers => hash_including("X-PAYPAL-REQUEST-DATA-FORMAT" => "JSON")) \
       .and_return(rest_client)
     client.execute(request)
   end
 
-  it "sets the response format to NV" do
+  it "sets the response format to JSON" do
     RestClient::Resource.should_receive(:new) \
-      .with(/^https:\/\/.*/, :headers => hash_including("X-PAYPAL-RESPONSE-DATA-FORMAT" => "NV")) \
+      .with(/^https:\/\/.*/, :headers => hash_including("X-PAYPAL-RESPONSE-DATA-FORMAT" => "JSON")) \
       .and_return(rest_client)
     client.execute(request)
   end

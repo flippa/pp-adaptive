@@ -1,5 +1,5 @@
 module AdaptivePayments
-  class FundingSource < Model
+  class FundingSource < JsonModel
     attribute :id,                          String,  :param => "fundingSourceId"
     attribute :last_four_digits_of_account, String,  :param => "lastFourOfAccountNumber"
     attribute :type,                        String

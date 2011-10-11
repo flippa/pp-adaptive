@@ -29,80 +29,82 @@ describe AdaptivePayments::PreapprovalRequest do
     )
   end
 
-  it "maps #ending_date to 'endingDate'" do
-    request.to_hash["endingDate"].should == "2011-09-20T07:57:02+10:00"
+  let(:json) { JSON.parse(request.to_json) }
+
+  it "maps #ending_date to ['endingDate']" do
+    json["endingDate"].should == "2011-09-20T07:57:02+10:00"
   end
 
-  it "maps #starting_date to 'startingDate'" do
-    request.to_hash["startingDate"].should == "2011-09-20T07:49:02+05:00"
+  it "maps #starting_date to ['startingDate']" do
+    json["startingDate"].should == "2011-09-20T07:49:02+05:00"
   end
 
-  it "maps #max_total_amount to 'maxTotalAmountOfAllPayments'" do
-    request.to_hash["maxTotalAmountOfAllPayments"].should == "720.00"
+  it "maps #max_total_amount to ['maxTotalAmountOfAllPayments']" do
+    json["maxTotalAmountOfAllPayments"].should == "720.00"
   end
 
-  it "maps #currency_code to 'currencyCode'" do
-    request.to_hash["currencyCode"].should == "USD"
+  it "maps #currency_code to ['currencyCode']" do
+    json["currencyCode"].should == "USD"
   end
 
-  it "maps #cancel_url to 'cancelUrl'" do
-    request.to_hash["cancelUrl"].should == "http://site.com/cancelled"
+  it "maps #cancel_url to ['cancelUrl']" do
+    json["cancelUrl"].should == "http://site.com/cancelled"
   end
 
-  it "maps #return_url to 'returnUrl'" do
-    request.to_hash["returnUrl"].should == "http://site.com/succeeded"
+  it "maps #return_url to ['returnUrl']" do
+    json["returnUrl"].should == "http://site.com/succeeded"
   end
 
-  it "maps #ipn_notification_url to 'ipnNotificationUrl'" do
-    request.to_hash["ipnNotificationUrl"].should == "http://site.com/ipn"
+  it "maps #ipn_notification_url to ['ipnNotificationUrl']" do
+    json["ipnNotificationUrl"].should == "http://site.com/ipn"
   end
 
-  it "maps #date_of_month to 'dateOfMonth'" do
-    request.to_hash["dateOfMonth"].should == "15"
+  it "maps #date_of_month to ['dateOfMonth']" do
+    json["dateOfMonth"].should == 15
   end
 
-  it "maps #day_of_week to 'dayOfWeek'" do
-    request.to_hash["dayOfWeek"].should == "friday"
+  it "maps #day_of_week to ['dayOfWeek']" do
+    json["dayOfWeek"].should == "friday"
   end
 
-  it "maps #max_amount_per_payment to 'maxAmountPerPayment'" do
-    request.to_hash["maxAmountPerPayment"].should == "60.00"
+  it "maps #max_amount_per_payment to ['maxAmountPerPayment']" do
+    json["maxAmountPerPayment"].should == "60.00"
   end
 
-  it "maps #max_payments to 'maxNumberOfPayments'" do
-    request.to_hash["maxNumberOfPayments"].should == "12"
+  it "maps #max_payments to ['maxNumberOfPayments']" do
+    json["maxNumberOfPayments"].should == 12
   end
 
-  it "maps #max_payments_per_period to 'maxNumberOfPaymentsPerPeriod'" do
-    request.to_hash["maxNumberOfPaymentsPerPeriod"].should == "1"
+  it "maps #max_payments_per_period to ['maxNumberOfPaymentsPerPeriod']" do
+    json["maxNumberOfPaymentsPerPeriod"].should == 1
   end
 
-  it "maps #payment_period to 'paymentPeriod'" do
-    request.to_hash["paymentPeriod"].should == "monthly"
+  it "maps #payment_period to ['paymentPeriod']" do
+    json["paymentPeriod"].should == "monthly"
   end
 
-  it "maps #memo to 'memo'" do
-    request.to_hash["memo"].should == "some memo"
+  it "maps #memo to ['memo']" do
+    json["memo"].should == "some memo"
   end
 
-  it "maps #sender_email to 'senderEmail'" do
-    request.to_hash["senderEmail"].should == "sender@site.com"
+  it "maps #sender_email to ['senderEmail']" do
+    json["senderEmail"].should == "sender@site.com"
   end
 
-  it "maps #pin_type to 'pinType'" do
-    request.to_hash["pinType"].should == "required"
+  it "maps #pin_type to ['pinType']" do
+    json["pinType"].should == "required"
   end
 
-  it "maps #fees_payer to 'feesPayer'" do
-    request.to_hash["feesPayer"].should == "sender"
+  it "maps #fees_payer to ['feesPayer']" do
+    json["feesPayer"].should == "sender"
   end
 
-  it "maps #display_max_total_amount to 'displayMaxTotalAmount'" do
-    request.to_hash["displayMaxTotalAmount"].should == "false"
+  it "maps #display_max_total_amount to ['displayMaxTotalAmount']" do
+    json["displayMaxTotalAmount"].should == false
   end
 
   it "does not include omitted parameters" do
     request.max_amount_per_payment = nil
-    request.to_hash.should_not have_key("maxAmountPerPayment")
+    json.should_not have_key("maxAmountPerPayment")
   end
 end
