@@ -1,5 +1,3 @@
-require "forwardable"
-
 module AdaptivePayments
   class AbstractRequest < JsonModel
     attribute :request_envelope, Node[RequestEnvelope], :param => "requestEnvelope"
@@ -17,7 +15,7 @@ module AdaptivePayments
 
       def build_response(string)
         klass = AdaptivePayments.const_get(operation.to_s + "Response")
-        klass.from_string(string.to_s)
+        klass.from_json(string.to_s)
       end
     end
   end
