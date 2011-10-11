@@ -3,7 +3,7 @@ module AdaptivePayments
   class CoercedArray < Array
     # Initialize the CoercedArray for the given type
     #
-    # @param [Class<JsonModel>]
+    # @param [Class<JsonModel>] type
     #   the JsonModel descendant to coerce to
     def initialize(type)
       raise ArgumentError, "The type in a CoercedArray must be a JsonModel" unless type <= JsonModel
@@ -15,7 +15,7 @@ module AdaptivePayments
     # Append the given value to the Array
     # The value may be a Hash to coerce, or a valid JsonModel
     #
-    # @param [Hash, JsonModel]
+    # @param [Hash, JsonModel] object
     #   the object to append
     #
     # @return CoercedArray
@@ -29,7 +29,7 @@ module AdaptivePayments
     # Concatenate another Array with this one and return the result as a new Array
     # All items in other will be coerced to the correct type
     #
-    # @param [Array]
+    # @param [Array] other
     #   another Array to concatenate with
     #
     # @return CoercedArray
@@ -40,7 +40,7 @@ module AdaptivePayments
 
     # Concatenate another Array with this one and modify the Array in place
     #
-    # @param [Array]
+    # @param [Array] other
     #   another Array to concatenate with
     #
     # @return CoercedArray
