@@ -28,7 +28,36 @@ describe AdaptivePayments::PreapprovalDetailsResponse do
         :memo                        => "some memo",
         :status                      => "ACTIVE",
         :feesPayer                   => "SENDER",
-        :displayMaxTotalAmount       => true
+        :displayMaxTotalAmount       => true,
+        :addressList                 => {
+          :address => [
+            {
+              :addressId      => "abc123",
+              :addressee_name => "Bob Cat",
+              :base_address   => {
+                :line1        => "56 Bobcat St",
+                :line2        => "Some estate",
+                :city         => "Bobcaton",
+                :state        => "BCT",
+                :postal_code  => "BC1 BC2",
+                :country_code => "BC",
+                :type         => "Home"
+              }
+            },
+            {
+              :addressId      => "abc456",
+              :addressee_name => "Pete Mouse",
+              :base_address   => {
+                :line1        => "2 Le Hole",
+                :city         => "Cheese City",
+                :state        => "MCT",
+                :postal_code  => "3000",
+                :country_code => "MM",
+                :type         => "Business"
+              }
+            }
+          ]
+        }
       }.to_json
     )
   end
@@ -119,5 +148,53 @@ describe AdaptivePayments::PreapprovalDetailsResponse do
 
   it "maps ['displayMaxTotalAmount'] to #display_max_total_amount? " do
     response.display_max_total_amount.should be_true
+  end
+
+  it "maps ['addressList']['address'][0]['addressId'] to #addresses.first.id" do
+    response.addresses.first.id.should == "abc123"
+  end
+
+  it "maps ['addressList']['address'][0]['addresseeName'] to #addresses.first.addressee_name" do
+    response.addresses.first.addressee_name.should == "Bob Cat"
+  end
+
+  it "maps ['addressList']['address'][0]['baseAddress']['line1'] to #addresses.first.line1" do
+    response.addresses.first.line1.should == "56 Bobcat St"
+  end
+
+  it "maps ['addressList']['address'][0]['baseAddress']['line2'] to #addresses.first.line2" do
+    response.addresses.first.line2.should == "Some estate"
+  end
+
+  it "maps ['addressList']['address'][0]['baseAddress']['city'] to #addresses.first.city" do
+    response.addresses.first.city.should == "Bobcaton"
+  end
+
+  it "maps ['addressList']['address'][0]['baseAddress']['state'] to #addresses.first.state" do
+    response.addresses.first.state.should == "BCT"
+  end
+
+  it "maps ['addressList']['address'][0]['baseAddress']['postalCode'] to #addresses.first.postal_code" do
+    response.addresses.first.postal_code.should == "BC1 BC2"
+  end
+
+  it "maps ['addressList']['address'][0]['baseAddress']['countryCode'] to #addresses.first.country_code" do
+    response.addresses.first.country_code.should == "BC"
+  end
+
+  it "maps ['addressList']['address'][0]['baseAddress']['type'] to #addresses.first.type" do
+    response.addresses.first.type.should == "Home"
+  end
+
+  it "maps ['addressList']['address'][1]['addressId'] to #addresses.last.id" do
+    response.addresses.last.id.should == "abc456"
+  end
+
+  it "maps ['addressList']['address'][1]['addresseeName'] to #addresses.last.addressee_name" do
+    response.addresses.last.addressee_name.should == "Pete Mouse"
+  end
+
+  it "maps ['addressList']['address'][1]['baseAddress']['line1'] to #addresses.last.line1" do
+    response.addresses.last.line1.should == "2 Le Hole"
   end
 end
