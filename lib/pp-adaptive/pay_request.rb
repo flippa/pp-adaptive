@@ -64,15 +64,15 @@ module AdaptivePayments
     }
 
     alias_params :allowed_funding_type, {
-      :allowed_funding_type_infos => :funding_type_infos
+      :allowed_funding_type_info => :funding_type_info
     }
 
     def allowed_funding_types
-      allowed_funding_type_infos.collect { |info| info[:funding_type] }
+      allowed_funding_type_info.collect { |info| info[:funding_type] }
     end
 
     def allowed_funding_types=(list_of_types)
-      self.allowed_funding_type_infos = list_of_types.map { |t| { :funding_type => t } }
+      self.allowed_funding_type_info = list_of_types.map { |t| { :funding_type => t } }
     end
 
     private

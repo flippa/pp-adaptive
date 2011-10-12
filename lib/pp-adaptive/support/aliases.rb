@@ -17,7 +17,7 @@ module AdaptivePayments
     def alias_param(attr, alias_name, original_name)
       def_delegator attr, original_name,        alias_name
       def_delegator attr, :"#{original_name}=", :"#{alias_name}="
-      def_delegator attr, :"#{original_name}?", :"#{alias_name}?" if attributes[attr].kind_of?(Virtus::Attribute::Boolean)
+      def_delegator attr, :"#{original_name}?", :"#{alias_name}?" # FIXME: Only alias this for Booleans
     end
 
     # Shortcut for definining multiple aliases in a single call
