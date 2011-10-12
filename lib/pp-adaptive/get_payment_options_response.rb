@@ -9,13 +9,13 @@ module AdaptivePayments
     attribute :receiver_options,    NodeList[ReceiverOptions],  :param => "receiverOptions"
 
     alias_params :initiating_entity, {
-      :institution_id         => :institution_id,
-      :customer_first_name    => :first_name,
-      :customer_last_name     => :last_name,
-      :customer_display_name  => :display_name,
-      :insitution_customer_id => :institution_customer_id,
-      :customer_country_code  => :country_code,
-      :customer_email         => :email
+      :institution_id          => :institution_id,
+      :customer_first_name     => :customer_first_name,
+      :customer_last_name      => :customer_last_name,
+      :customer_display_name   => :customer_display_name,
+      :institution_customer_id => :institution_customer_id,
+      :customer_country_code   => :customer_country_code,
+      :customer_email          => :customer_email
     }
 
     alias_params :display_options, {
