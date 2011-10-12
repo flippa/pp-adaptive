@@ -44,7 +44,7 @@ describe AdaptivePayments::SetPaymentOptionsRequest do
     )
   end
 
-  let(:json)    { JSON.parse(request.to_json) }
+  let(:json)  { JSON.parse(request.to_json) }
 
   it "maps #pay_key to ['payKey']" do
     json["payKey"].should == "ABCD-1234"
