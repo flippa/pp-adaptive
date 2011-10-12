@@ -46,6 +46,9 @@ require "pp-adaptive/payment_details_request"
 require "pp-adaptive/payment_details_response"
 require "pp-adaptive/execute_payment_request"
 require "pp-adaptive/execute_payment_response"
+
+require "pp-adaptive/get_payment_options_request"
+
 require "pp-adaptive/preapproval_request"
 require "pp-adaptive/preapproval_response"
 require "pp-adaptive/preapproval_details_request"
