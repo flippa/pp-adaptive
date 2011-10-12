@@ -9,13 +9,7 @@ module AdaptivePayments
     attribute :sender_transaction_status, String,         :param => "senderTransactionStatus"
     attribute :pending_reason,            String,         :param => "pendingReason"
 
-    alias_params :receiver, {
-      :receiver_email  => :email,
-      :receiver_amount => :amount,
-      :payment_type    => :payment_type,
-      :payment_subtype => :payment_subtype,
-      :invoice_id      => :invoice_id
-    }
+    include ReceiverAliases
   end
 
   # FIXME: Add predicates for the transaction_status

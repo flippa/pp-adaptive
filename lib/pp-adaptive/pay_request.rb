@@ -17,6 +17,8 @@ module AdaptivePayments
     attribute :funding_constraint,                 Node[FundingConstraint], :param => "fundingConstraint"
     attribute :client_details,                     Node[ClientDetailsType], :param => "clientDetails"
 
+    include ReceiverListAliases
+
     alias_params :client_details, {
       :client_ip_address     => :ip_address,
       :client_device_id      => :device_id,
@@ -26,25 +28,6 @@ module AdaptivePayments
       :client_customer_type  => :customer_type,
       :client_partner_name   => :partner_name,
       :client_customer_id    => :customer_id
-    }
-
-    alias_params :receiver_list, {
-      :receivers => :receivers
-    }
-
-    alias_params :first_receiver, {
-      :receiver_email  => :email,
-      :receiver_amount => :amount,
-      :payment_type    => :payment_type,
-      :payment_subtype => :payment_subtype,
-      :invoice_id      => :invoice_id,
-      :receiver_phone  => :phone
-    }
-
-    alias_params :receiver_phone, {
-      :receiver_phone_number       => :phone_number,
-      :receiver_phone_country_code => :country_code,
-      :receiver_phone_extension    => :extension
     }
 
     alias_params :sender, {
@@ -73,12 +56,6 @@ module AdaptivePayments
 
     def allowed_funding_types=(list_of_types)
       self.allowed_funding_type_info = list_of_types.map { |t| { :funding_type => t } }
-    end
-
-    private
-
-    def first_receiver
-      receivers[0] ||= Receiver.new
     end
 
     # For explicit approval, redirect the user to https://www.paypal.com/webscr?cmd=_ap-payment&paykey=value

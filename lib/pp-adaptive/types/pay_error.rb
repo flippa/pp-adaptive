@@ -3,13 +3,7 @@ module AdaptivePayments
     attribute :receiver, Node[Receiver]
     attribute :error,    Node[ErrorData]
 
-    alias_params :receiver, {
-      :receiver_email  => :email,
-      :receiver_amount => :amount,
-      :payment_type    => :payment_type,
-      :payment_subtype => :payment_subtype,
-      :invoice_id      => :invoice_id
-    }
+    include ReceiverAliases
 
     alias_params :error, {
       :error_id         => :id,
