@@ -91,6 +91,10 @@ describe AdaptivePayments::GetPaymentOptionsResponse do
     response.header_image_url.should == "http://site.com/header.png"
   end
 
+  it "maps ['displayOptions']['businessName'] to #business_na,e" do
+    response.business_name.should == "Bobcats R us"
+  end
+
   it "maps ['shippingAddressId'] to #shipping_address_id" do
     response.shipping_address_id.should == "addr123"
   end
