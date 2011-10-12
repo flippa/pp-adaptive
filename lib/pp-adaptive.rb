@@ -51,6 +51,7 @@ require "pp-adaptive/preapproval_response"
 require "pp-adaptive/preapproval_details_request"
 require "pp-adaptive/preapproval_details_response"
 require "pp-adaptive/cancel_preapproval_request"
+require "pp-adaptive/cancel_preapproval_response"
 require "pp-adaptive/refund_request"
 require "pp-adaptive/refund_response"
 
