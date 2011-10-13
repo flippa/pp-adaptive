@@ -40,7 +40,7 @@ module AdaptivePayments
 
     # Provide status predicates for the possible response ack codes
     %w{success? failure? warning? success_with_warning? failure_with_warning?}.each do |method|
-      define_method(method) { responseEnvelope.send(method) }
+      define_method(method) { response_envelope.send(method) }
     end
   end
 end

@@ -29,4 +29,8 @@ shared_examples "a ResponseEnvelope" do
   it "maps ['responseEnvelope']['correlationId'] to #correlation_id" do
     response.correlation_id.should == "1234"
   end
+
+  it "provides predicate methods for the ack code" do
+    response.success?.should be_true
+  end
 end
