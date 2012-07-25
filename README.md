@@ -1,17 +1,7 @@
 # A Ruby API for PayPal Adaptive Payments
 
-  - Current Status: Work-in-progress (don't use, API subject to major change)
-  - Working:
-    - setting up an explicit preapproval
-    - processing payments (for an explicit preapproval)
-  - Not working:
-    - executing pre-created payments
-    - changing options on a created payment
-    - refunds/cancellations
-    - minor things like currency conversion requests
-
 This gem provides access to PayPal's Adaptive Payments API using easy-to-use
-ruby classes.  The internals are largely backed by
+ruby classes. The internals are largely backed by
 [Virtus](https://github.com/solnic/virtus) and
 [RestClient](https://github.com/archiloque/rest-client), and so are easy to
 work with.
@@ -21,6 +11,16 @@ work with.
 Via rubygems:
 
     gem install pp-adaptive
+
+All API calls are made by calling `#execute` on the client, with the relevant
+request object. Naming conventions have been ruby-ized, but you should just
+follow along with the PayPal documentation to understand the inputs and outputs.
+
+Some aliases have been added, to make things simpler.  This documentation is a
+work in progress, so it's probably better to browse the source files, which are
+effectively models that are declarative in nature.
+
+Some quick examples follow.
 
 ## Setting up a Preapproval Agreement
 
