@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["chris@w3style.co.uk"]
   s.homepage    = "https://github.com/"
   s.summary     = %q{Rubygem for working with PayPal's Adaptive Payments API}
-  s.description = %q{Currently provides just a subset of PayPal's API, for setting up preapproval agreements and taking payments}
+  s.description = %q{Provides complete access to PayPal's Adaptive Payments API}
 
   s.rubyforge_project = "pp-adaptive"
 
