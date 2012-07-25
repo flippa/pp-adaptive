@@ -25,30 +25,30 @@ Some quick examples follow.
 ## Setting up a Preapproval Agreement
 
 ``` ruby
-    require 'pp-adaptive'
-    
-    client = AdaptivePayments::Client.new(
-      :user_id       => "your-api-user-id",
-      :password      => "your-api-password",
-      :signature     => "your-api-signature",
-      :app_id        => "your-app-id",
-      :sandbox       => false
-    )
+require 'pp-adaptive'
 
-    response = client.execute(AdaptivePayments::PreapprovalRequest.new(
-      :ending_date      => DateTime.now.next_year,
-      :starting_date    => DateTime.now,
-      :max_total_amount => BigDecimal("950.00"),
-      :currency_code    => "USD",
-      :cancel_url       => "http://site.com/cancelled",
-      :return_url       => "http://site.com/completed"
-    ))
-    
-    if response.success?
-      puts "Preapproval key: #{response.preapproval_key}"
-    else
-      puts "#{response.ack_code}: #{response.error_message}"
-    end
+client = AdaptivePayments::Client.new(
+  :user_id       => "your-api-user-id",
+  :password      => "your-api-password",
+  :signature     => "your-api-signature",
+  :app_id        => "your-app-id",
+  :sandbox       => false
+)
+
+response = client.execute(AdaptivePayments::PreapprovalRequest.new(
+  :ending_date      => DateTime.now.next_year,
+  :starting_date    => DateTime.now,
+  :max_total_amount => BigDecimal("950.00"),
+  :currency_code    => "USD",
+  :cancel_url       => "http://site.com/cancelled",
+  :return_url       => "http://site.com/completed"
+))
+
+if response.success?
+  puts "Preapproval key: #{response.preapproval_key}"
+else
+  puts "#{response.ack_code}: #{response.error_message}"
+end
 ```
 
 (Work in progress...)
