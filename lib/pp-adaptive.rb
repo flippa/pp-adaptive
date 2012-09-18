@@ -1,5 +1,7 @@
 require "pp-adaptive/version"
 
+require "pp-adaptive/exception"
+
 require "pp-adaptive/support/aliases"
 require "pp-adaptive/support/json_model"
 require "pp-adaptive/support/coerced_array"

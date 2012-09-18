@@ -87,6 +87,8 @@ module AdaptivePayments
       request.class.build_response(response).tap do |res|
         yield res if block_given?
       end
+    rescue RestClient::Exception => e
+      raise AdaptivePayments::Exception, e
     end
 
     # When initiating a preapproval, get the URL on paypal.com to send the user to.
