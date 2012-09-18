@@ -74,11 +74,11 @@ module AdaptivePayments
       private
 
       def attribute_key(key)
-        Hash[attributes.map { |attr| [attr.options.fetch(:param, attr.name).to_s, attr.name.to_sym] }][key] || key.to_sym
+        Hash[attribute_set.map { |attr| [attr.options.fetch(:param, attr.name).to_s, attr.name.to_sym] }][key] || key.to_sym
       end
 
       def attribute_value(key, value)
-        return unless attribute = attributes[attribute_key(key)]
+        return unless attribute = attribute_set[attribute_key(key)]
 
         case attribute
           when Node
@@ -98,8 +98,9 @@ module AdaptivePayments
       # @return [Hash]
       #   the JSON representation in ruby Hash form
       def to_hash
-        attributes.inject({}) { |hash, (key, value)| value.nil? ? hash : hash.merge(json_key(key) => json_value(value)) } \
-          .reject { |key, value| value.kind_of?(Enumerable) && value.none? }
+        Hash[attribute_set.map{ |a| [a.name, self[a.name]] }].
+          inject({}) { |hash, (key, value)| value.nil? ? hash : hash.merge(json_key(key) => json_value(value)) }.
+          reject { |key, value| value.kind_of?(Enumerable) && value.none? }
       end
 
       # Convert this JsonModel into a JSON string for transport to the PayPal API
@@ -113,8 +114,8 @@ module AdaptivePayments
       private
 
       def json_key(key)
-        if self.class.attributes[key]
-          self.class.attributes[key].options.fetch(:param, key).to_s
+        if self.class.attribute_set[key]
+          self.class.attribute_set[key].options.fetch(:param, key).to_s
         else
           key.to_s
         end

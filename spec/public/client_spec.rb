@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe AdaptivePayments::Client do
-  let(:rest_client)   { double(:post => nil).tap { |d| d.stub(:[] => d) } }
-  let(:request_class) { stub(:operation => :Test, :build_response => nil) }
+  let(:rest_client)   { double(:post => '{}').tap { |d| d.stub(:[] => d) } }
+  let(:request_class) { stub(:operation => :Refund, :build_response => nil) }
   let(:request)       { stub(:class => request_class, :to_json => '{}') }
   let(:client)        { AdaptivePayments::Client.new }
 
@@ -81,5 +81,17 @@ describe AdaptivePayments::Client do
     response = stub(:response)
     request_class.should_receive(:build_response).and_return(response)
     client.execute(request).should == response
+  end
+
+  it "allows passing a Symbol + Hash instead of a full request object" do
+    client.execute(:Refund, {}).should be_a_kind_of(AdaptivePayments::RefundResponse)
+  end
+
+  it "yields the response object" do
+    response = stub(:response)
+    request_class.should_receive(:build_response).and_return(response)
+    ret_val = nil
+    client.execute(request) { |r| ret_val = r }
+    ret_val.should == response
   end
 end

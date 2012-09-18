@@ -28,6 +28,17 @@ module AdaptivePayments
         @operation
       end
 
+      # Get the request class for the given operation.
+      #
+      # @param [Symbol] operation
+      #   the name of the operation
+      #
+      # @return [AbstractRequest]
+      #   the request subclass
+      def for_operation(name)
+        AdaptivePayments.const_get(name.to_s + "Request")
+      end
+
       # Given a JSON string, return the corresponding response.
       #
       # @param [String] json
