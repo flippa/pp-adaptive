@@ -119,7 +119,7 @@ module AdaptivePayments
         "https://www.",
         ("sandbox." if sandbox?),
         "paypal.com/webscr?cmd=_ap-payment&paykey=",
-        response.preapproval_key
+        response.pay_key
       ].join
     end
 
