@@ -16,6 +16,7 @@ module AdaptivePayments
     attribute :memo,                               String
     attribute :funding_constraint,                 Node[FundingConstraint], :param => "fundingConstraint"
     attribute :client_details,                     Node[ClientDetailsType], :param => "clientDetails"
+    attribute :fees_payer,                         String,                  :param => "feesPayer"
 
     include ReceiverListAliases
 
