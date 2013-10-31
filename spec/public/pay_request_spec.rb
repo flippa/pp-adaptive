@@ -25,7 +25,8 @@ describe AdaptivePayments::PayRequest do
       :sender_phone_extension    => "033",
       :reverse_parallel_payments_on_error => false,
       :tracking_id               => "anything.id",
-      :memo                      => "a personal note"
+      :memo                      => "a personal note",
+      :fees_payer                => "PRIMARYRECEIVER"
     )
   end
 
