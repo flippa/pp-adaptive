@@ -2,8 +2,8 @@ require "spec_helper"
 
 describe AdaptivePayments::Client do
   let(:rest_client)   { double(:post => '{}').tap { |d| d.stub(:[] => d) } }
-  let(:request_class) { stub(:operation => :Refund, :build_response => nil) }
-  let(:request)       { stub(:class => request_class, :to_json => '{}') }
+  let(:request_class) { double(:operation => :Refund, :build_response => nil) }
+  let(:request)       { double(:class => request_class, :to_json => '{}') }
   let(:client)        { AdaptivePayments::Client.new }
 
   before(:each) do
@@ -78,7 +78,7 @@ describe AdaptivePayments::Client do
   end
 
   it "uses the request class to build a response" do
-    response = stub(:response)
+    response = double(:response)
     request_class.should_receive(:build_response).and_return(response)
     client.execute(request).should == response
   end
@@ -88,7 +88,7 @@ describe AdaptivePayments::Client do
   end
 
   it "yields the response object" do
-    response = stub(:response)
+    response = double(:response)
     request_class.should_receive(:build_response).and_return(response)
     ret_val = nil
     client.execute(request) { |r| ret_val = r }
