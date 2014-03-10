@@ -11,7 +11,7 @@ module AdaptivePayments
   # in the Array will be coerced to the boxed type. If an Array is assigned directly to the attribute,
   # all items inside it will be coerced to the boxed type.  If a Hash is pushed onto the existing
   # Array, it will be coerced to the boxed type.
-  class NodeList < Virtus::Attribute::Object
+  class NodeList < Virtus::Attribute
     primitive ::Array
 
     # Allow access to the boxed type

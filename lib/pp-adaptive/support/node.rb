@@ -12,7 +12,7 @@ module AdaptivePayments
   #
   # Assigning a Hash directly to the attribute will store an object of the boxed type, based on the elements
   # in the Hash.
-  class Node < Virtus::Attribute::Object
+  class Node < Virtus::Attribute
     # Provide access to the boxed type
     attr_reader :type
 

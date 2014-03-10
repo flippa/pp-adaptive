@@ -39,7 +39,7 @@ module AdaptivePayments
   # feel more ruby-esque, pp-adaptive define aliases where it seems logical to do so.  The fully qualified paths will always
   # work, however.
   class JsonModel
-    include Virtus
+    include Virtus.model
     extend  Aliases
 
     # Methods used for building a JsonModel given a JSON string.
