@@ -29,14 +29,14 @@ module AdaptivePayments
         raise ArgumentError, "Lists may only be created from JsonModel classes" unless type <= JsonModel
 
         Class.new(self) do
-          default lambda { |m, a| CoercedArray.new(type) }
+          default lambda { |m, a| arr = CoercedArray.for_type(type) }
 
           define_method :type do
             type
           end
 
           define_method :coerce do |value|
-            CoercedArray.new(type) + Array(value)
+            CoercedArray.for_type(type) + Array.new(value)
           end
         end
       end
