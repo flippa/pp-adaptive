@@ -4,10 +4,10 @@ require "virtus"
 describe AdaptivePayments::JsonModel do
   let(:model) do
     Class.new(AdaptivePayments::JsonModel) do
-      attribute :an_example, Virtus::Attribute::String, :param => "anExample"
-      attribute :simple,     Virtus::Attribute::String
-      attribute :numeric,    Virtus::Attribute::Decimal
-      attribute :optional,   Virtus::Attribute::String, :default => "test"
+      attribute :an_example, String, :param => "anExample"
+      attribute :simple,     String
+      attribute :numeric,    BigDecimal
+      attribute :optional,   String, :default => "test"
     end
   end
 
