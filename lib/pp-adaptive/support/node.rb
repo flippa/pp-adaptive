@@ -30,6 +30,7 @@ module AdaptivePayments
         @generated_class_map       ||= {}
         @generated_class_map[type] ||= Class.new(self) do
           default lambda { |m, a| type.new }
+          lazy true
 
           define_method :type do
             type
