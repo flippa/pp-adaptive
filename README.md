@@ -1,4 +1,6 @@
-# A Ruby API for PayPal Adaptive Payments
+# pp-adative [![Build Status](https://travis-ci.org/flippa/pp-adaptive.png?branch=master)](https://travis-ci.org/flippa/pp-adaptive)
+
+A Ruby API for PayPal Adaptive Payments
 
 This gem provides access to PayPal's Adaptive Payments API using easy-to-use
 ruby classes. The internals are largely backed by
