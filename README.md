@@ -248,6 +248,11 @@ https://www.paypalobjects.com/webstatic/en_US/developer/docs/pdf/pp_adaptivepaym
 Just ruby-ize the fields (i.e. underscores, not camel case) and open up the
 request/response classes in this repository to get a feel for how this all works.
 
+## Contributors
+
+* [d11wtq](https://github.com/d11wtq)
+* [Maxim-Filimonov](https://github.com/Maxim-Filimonov)
+
 ## License & Copyright
 
 Copyright © Flippa.com Pty Ltd. Licensed under the MIT license. See the
