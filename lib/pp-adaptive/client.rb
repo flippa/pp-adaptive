@@ -4,7 +4,7 @@ require "virtus"
 module AdaptivePayments
   # The principle hub through which all requests and responses are passed.
   class Client
-    include Virtus
+    include Virtus.model
 
     attribute :user_id,   String, :header => "X-PAYPAL-SECURITY-USERID"
     attribute :password,  String, :header => "X-PAYPAL-SECURITY-PASSWORD"

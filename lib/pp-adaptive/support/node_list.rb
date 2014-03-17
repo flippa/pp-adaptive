@@ -11,8 +11,7 @@ module AdaptivePayments
   # in the Array will be coerced to the boxed type. If an Array is assigned directly to the attribute,
   # all items inside it will be coerced to the boxed type.  If a Hash is pushed onto the existing
   # Array, it will be coerced to the boxed type.
-  class NodeList < Virtus::Attribute::Object
-    primitive ::Array
+  class NodeList < Virtus::Attribute
 
     # Allow access to the boxed type
     attr_reader :type
@@ -29,14 +28,14 @@ module AdaptivePayments
         raise ArgumentError, "Lists may only be created from JsonModel classes" unless type <= JsonModel
 
         Class.new(self) do
-          default lambda { |m, a| CoercedArray.new(type) }
+          default lambda { |m, a| arr = CoercedArray.for_type(type) }
 
           define_method :type do
             type
           end
 
           define_method :coerce do |value|
-            CoercedArray.new(type) + Array(value)
+            CoercedArray.for_type(type) + Array.new(value)
           end
         end
       end
