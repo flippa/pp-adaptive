@@ -254,6 +254,7 @@ request/response classes in this repository to get a feel for how this all works
 
 * [d11wtq](https://github.com/d11wtq)
 * [Maxim-Filimonov](https://github.com/Maxim-Filimonov)
+* [hajder](https://github.com/hajder)
 
 ## License & Copyright
 
