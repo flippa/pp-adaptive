@@ -245,7 +245,7 @@ Adaptive Payments is a very extensive API with a lot of endpoints and a lot
 of fields within each request. It wouldn't be wise to attempt to document them
 all here, but the official API documentation covers everything in detail.
 
-https://www.paypalobjects.com/webstatic/en_US/developer/docs/pdf/pp_adaptivepayments.pdf
+https://developer.paypal.com/webapps/developer/docs/classic/adaptive-payments/integration-guide/APIntro/
 
 Just ruby-ize the fields (i.e. underscores, not camel case) and open up the
 request/response classes in this repository to get a feel for how this all works.
