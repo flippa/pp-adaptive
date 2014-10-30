@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = AdaptivePayments::VERSION
   s.authors     = ["d11wtq"]
   s.email       = ["chris@w3style.co.uk"]
-  s.homepage    = "https://github.com/"
+  s.homepage    = "https://github.com/flippa/pp-adaptive"
   s.summary     = %q{Rubygem for working with PayPal's Adaptive Payments API}
   s.description = %q{Provides complete access to PayPal's Adaptive Payments API}
 
