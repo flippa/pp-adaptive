@@ -1,4 +1,4 @@
-# pp-adative [![Build Status](https://travis-ci.org/flippa/pp-adaptive.png?branch=master)](https://travis-ci.org/flippa/pp-adaptive)
+# pp-adative [![Build Status](https://travis-ci.org/flippa/pp-adaptive.svg?branch=master)](https://travis-ci.org/flippa/pp-adaptive)
 
 A Ruby API for PayPal Adaptive Payments
 
