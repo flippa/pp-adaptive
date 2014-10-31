@@ -5,10 +5,10 @@ shared_examples "a RequestEnvelope" do
   let(:json)    { JSON.parse(request.to_json) }
 
   it "maps #detail_level to ['requestEnvelope']['detailLevel']" do
-    json["requestEnvelope"]["detailLevel"].should == "ReturnAll"
+    expect(json["requestEnvelope"]["detailLevel"]).to eq("ReturnAll")
   end
 
   it "includes 'en_US' as the ['errorLanguage']" do
-    json["requestEnvelope"]["errorLanguage"].should == "en_US"
+    expect(json["requestEnvelope"]["errorLanguage"]).to eq("en_US")
   end
 end

@@ -16,7 +16,7 @@ describe AdaptivePayments::NodeList do
 
   describe "default type" do
     it "is a kind of Array" do
-      model.new.children.should be_a_kind_of(Array)
+      expect(model.new.children).to be_a_kind_of(Array)
     end
   end
 
@@ -25,7 +25,7 @@ describe AdaptivePayments::NodeList do
       let(:object) { model.new.tap { |o| o.children << { :example => "anything" } } }
 
       it "coerces hash to instances of the given type" do
-        object.children.first.should be_an_instance_of(child_model)
+        expect(object.children.first).to be_an_instance_of(child_model)
       end
     end
 
@@ -33,7 +33,7 @@ describe AdaptivePayments::NodeList do
       let(:object) { model.new.tap { |o| o.children = [{ :example => "anything" }] } }
 
       it "coerces each member to instances of the given type" do
-        object.children.first.should be_an_instance_of(child_model)
+        expect(object.children.first).to be_an_instance_of(child_model)
       end
     end
   end
@@ -43,7 +43,7 @@ describe AdaptivePayments::NodeList do
       let(:json) { model.new(:children => [{ :example => "whatever" }]).to_json }
 
       it "is present as a child in the output" do
-        json.should == '{"children":[{"example":"whatever"}]}'
+        expect(json).to eq('{"children":[{"example":"whatever"}]}')
       end
     end
 
@@ -51,7 +51,7 @@ describe AdaptivePayments::NodeList do
       let(:json) { model.new.to_json }
 
       it "is omitted from the output" do
-        json.should == '{}'
+        expect(json).to eq('{}')
       end
     end
   end

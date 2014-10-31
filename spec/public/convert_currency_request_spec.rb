@@ -4,7 +4,11 @@ describe AdaptivePayments::ConvertCurrencyRequest do
   it_behaves_like "a RequestEnvelope"
 
   subject         { AdaptivePayments::ConvertCurrencyRequest }
-  its(:operation) { should == :ConvertCurrency }
+
+  describe '#operation' do
+    subject { super().operation }
+    it { is_expected.to eq(:ConvertCurrency) }
+  end
 
   let(:request) do
     AdaptivePayments::ConvertCurrencyRequest.new(
@@ -19,11 +23,11 @@ describe AdaptivePayments::ConvertCurrencyRequest do
   let(:json) { JSON.parse(request.to_json) }
 
   it "maps #currency.first.amount to ['baseAmountList']['currency'][0]['amount']" do
-    json["baseAmountList"]["currency"][0]["amount"].should == "14.99"
+    expect(json["baseAmountList"]["currency"][0]["amount"]).to eq("14.99")
   end
 
   it "maps #currency.first.amount to ['baseAmountList']['currency'][1]['amount']" do
-    json["baseAmountList"]["currency"][1]["amount"].should == "129.99"
+    expect(json["baseAmountList"]["currency"][1]["amount"]).to eq("129.99")
   end
 
 end

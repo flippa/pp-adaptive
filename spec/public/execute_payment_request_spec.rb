@@ -4,7 +4,11 @@ describe AdaptivePayments::ExecutePaymentRequest do
   it_behaves_like "a RequestEnvelope"
 
   subject         { AdaptivePayments::ExecutePaymentRequest }
-  its(:operation) { should == :ExecutePayment }
+
+  describe '#operation' do
+    subject { super().operation }
+    it { is_expected.to eq(:ExecutePayment) }
+  end
 
   let(:request) do
     AdaptivePayments::ExecutePaymentRequest.new(
@@ -17,14 +21,14 @@ describe AdaptivePayments::ExecutePaymentRequest do
   let(:json) { JSON.parse(request.to_json) }
 
   it "maps #action_type to ['actionType']" do
-    json["actionType"].should == "PAY"
+    expect(json["actionType"]).to eq("PAY")
   end
 
   it "maps #pay_key to ['payKey']" do
-    json["payKey"].should == "ABCD-1234"
+    expect(json["payKey"]).to eq("ABCD-1234")
   end
 
   it "maps #funding_plan_id to ['fundingPlanId']" do
-    json["fundingPlanId"].should == "funding123"
+    expect(json["fundingPlanId"]).to eq("funding123")
   end
 end

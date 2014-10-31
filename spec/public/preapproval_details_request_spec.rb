@@ -4,7 +4,11 @@ describe AdaptivePayments::PreapprovalDetailsRequest do
   it_behaves_like "a RequestEnvelope"
 
   subject         { AdaptivePayments::PreapprovalDetailsRequest }
-  its(:operation) { should == :PreapprovalDetails }
+
+  describe '#operation' do
+    subject { super().operation }
+    it { is_expected.to eq(:PreapprovalDetails) }
+  end
 
   let(:request) do
     AdaptivePayments::PreapprovalDetailsRequest.new(
@@ -16,10 +20,10 @@ describe AdaptivePayments::PreapprovalDetailsRequest do
   let(:json) { JSON.parse(request.to_json) }
 
   it "maps #preapproval_key to ['preapprovalKey']" do
-    json["preapprovalKey"].should == "ABCDEFG-1234"
+    expect(json["preapprovalKey"]).to eq("ABCDEFG-1234")
   end
 
   it "maps #get_billing_address to ['getBillingAddress']" do
-    json["getBillingAddress"].should == true
+    expect(json["getBillingAddress"]).to eq(true)
   end
 end

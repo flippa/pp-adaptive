@@ -15,8 +15,8 @@ describe AdaptivePayments::JsonModel do
     let(:object) { model.new(:an_example => "string", :numeric => 20) }
 
     it "casts inputs to the correct type" do
-      object.an_example.should == "string"
-      object.numeric.should == BigDecimal("20.00")
+      expect(object.an_example).to eq("string")
+      expect(object.numeric).to eq(BigDecimal("20.00"))
     end
   end
 
@@ -24,7 +24,7 @@ describe AdaptivePayments::JsonModel do
     let(:object) { model.new }
 
     it "reads the :default option for a default value" do
-      object.optional.should == "test"
+      expect(object.optional).to eq("test")
     end
   end
 
@@ -33,7 +33,7 @@ describe AdaptivePayments::JsonModel do
       let(:json) { model.new.to_json }
 
       it "omits the empty values" do
-        json.should == '{"optional":"test"}'
+        expect(json).to eq('{"optional":"test"}')
       end
     end
 
@@ -41,7 +41,7 @@ describe AdaptivePayments::JsonModel do
       let(:json) { model.new(:numeric => 10).to_json }
 
       it "formats the decimal to scale 2" do
-        json.should == '{"numeric":"10.00","optional":"test"}'
+        expect(json).to eq('{"numeric":"10.00","optional":"test"}')
       end
     end
 
@@ -49,7 +49,7 @@ describe AdaptivePayments::JsonModel do
       let(:json) { model.new(:an_example => "whatever").to_json }
 
       it "uses the param as the key" do
-        json.should == '{"anExample":"whatever","optional":"test"}'
+        expect(json).to eq('{"anExample":"whatever","optional":"test"}')
       end
     end
   end

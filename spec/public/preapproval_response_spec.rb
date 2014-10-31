@@ -9,6 +9,6 @@ describe AdaptivePayments::PreapprovalResponse do
   end
 
   it "maps ['preapprovalKey'] to #preapproval_key" do
-    response.preapproval_key.should == "SOME-KEY"
+    expect(response.preapproval_key).to eq("SOME-KEY")
   end
 end

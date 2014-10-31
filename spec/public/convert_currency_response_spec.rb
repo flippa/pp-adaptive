@@ -44,19 +44,19 @@ describe AdaptivePayments::ConvertCurrencyResponse do
   end
 
   it "maps ['estimatedAmountTable']['currencyConversionList']['baseAmount']['code'] to #currency_conversions[0].base_currency_code" do
-    response.currency_conversions.first.base_currency_code.should == "USD"
+    expect(response.currency_conversions.first.base_currency_code).to eq("USD")
   end
 
   it "maps ['estimatedAmountTable']['currencyConversionList']['baseAmount']['amount'] to #currency_conversions[0].base_currency_amount" do
-    response.currency_conversions.first.base_currency_amount.should == BigDecimal.new("14.99")
+    expect(response.currency_conversions.first.base_currency_amount).to eq(BigDecimal.new("14.99"))
   end
 
   it "maps ['estimatedAmountTable']['currencyConversionList']['currencyList']['currency][0]['code'] to #currency_conversions[0].currencies[0].currency_code" do
-    response.currency_conversions.first.currencies.first.code.should == "JPY"
+    expect(response.currency_conversions.first.currencies.first.code).to eq("JPY")
   end
 
   it "maps ['estimatedAmountTable']['currencyConversionList']['currencyList']['currency][0]['amount'] to #currency_conversions[0].currencies[0].currency_amount" do
-    response.currency_conversions.first.currencies.first.amount.should == BigDecimal.new("1733")
+    expect(response.currency_conversions.first.currencies.first.amount).to eq(BigDecimal.new("1733"))
   end
 
 end
