@@ -63,138 +63,138 @@ describe AdaptivePayments::PreapprovalDetailsResponse do
   end
 
   it "maps ['approved'] to #approved" do
-    response.approved.should be_false
+    expect(response.approved).to be_falsey
   end
 
   it "maps ['cancelUrl'] to #cancel_url" do
-    response.cancel_url.should == "http://site.com/cancelled"
+    expect(response.cancel_url).to eq("http://site.com/cancelled")
   end
 
   it "maps ['returnUrl'] to #return_url" do
-    response.return_url.should == "http://site.com/success"
+    expect(response.return_url).to eq("http://site.com/success")
   end
 
   it "maps ['ipnNotificationUrl'] to #ipn_notification_url" do
-    response.ipn_notification_url.should == "http://site.com/ipn"
+    expect(response.ipn_notification_url).to eq("http://site.com/ipn")
   end
 
   it "maps ['currencyCode'] to #currency_code" do
-    response.currency_code.should == "USD"
+    expect(response.currency_code).to eq("USD")
   end
 
   it "maps ['maxTotalAmountOfAllPayments'] to #max_total_amount" do
-    response.max_total_amount.should == BigDecimal('680.00')
+    expect(response.max_total_amount).to eq(BigDecimal('680.00'))
   end
 
   it "maps ['startingDate'] to #starting_date" do
-    response.starting_date.should == DateTime.new(2011, 9, 22, 12, 37, 7)
+    expect(response.starting_date).to eq(DateTime.new(2011, 9, 22, 12, 37, 7))
   end
 
   it "maps ['endingDate'] to #ending_date" do
-    response.ending_date.should == DateTime.new(2012, 9, 22, 12, 37, 7)
+    expect(response.ending_date).to eq(DateTime.new(2012, 9, 22, 12, 37, 7))
   end
 
   it "maps ['maxAmountPerPayment'] to #max_amount_per_payment" do
-    response.max_amount_per_payment.should == BigDecimal('60.00')
+    expect(response.max_amount_per_payment).to eq(BigDecimal('60.00'))
   end
 
   it "maps ['paymentPeriod'] to #payment_period" do
-    response.payment_period.should == "MONTHLY"
+    expect(response.payment_period).to eq("MONTHLY")
   end
 
   it "maps ['curPayments'] to #current_payments" do
-    response.current_payments.should == 2
+    expect(response.current_payments).to eq(2)
   end
 
   it "maps ['curPaymentsAmount'] to #current_payments_amount" do
-    response.current_payments_amount.should == BigDecimal('100.00')
+    expect(response.current_payments_amount).to eq(BigDecimal('100.00'))
   end
 
   it "maps ['curPeriodAttempts'] to #current_period_attempts" do
-    response.current_period_attempts.should == 1
+    expect(response.current_period_attempts).to eq(1)
   end
 
   it "maps ['curPeriodEndingDate'] to #current_period_ending_date" do
-    response.current_period_ending_date.should == DateTime.new(2011, 9, 30, 12, 37, 7)
+    expect(response.current_period_ending_date).to eq(DateTime.new(2011, 9, 30, 12, 37, 7))
   end
 
   it "maps ['dateOfMonth'] to #date_of_month" do
-    response.date_of_month.should == 15
+    expect(response.date_of_month).to eq(15)
   end
 
   it "maps ['dayOfWeek'] to #day_of_week" do
-    response.day_of_week.should == "FRIDAY"
+    expect(response.day_of_week).to eq("FRIDAY")
   end
 
   it "maps ['pinType'] to #pin_type" do
-    response.pin_type.should == "NOT_REQUIRED"
+    expect(response.pin_type).to eq("NOT_REQUIRED")
   end
 
   it "maps ['senderEmail'] to #sender_email" do
-    response.sender_email.should == "bob@gmail.com"
+    expect(response.sender_email).to eq("bob@gmail.com")
   end
 
   it "maps ['memo'] to #memo" do
-    response.memo.should == "some memo"
+    expect(response.memo).to eq("some memo")
   end
 
   it "maps ['status'] to #status" do
-    response.status.should == "ACTIVE"
+    expect(response.status).to eq("ACTIVE")
   end
 
   it "maps ['feesPayer'] to #fees_payer" do
-    response.fees_payer.should == "SENDER"
+    expect(response.fees_payer).to eq("SENDER")
   end
 
   it "maps ['displayMaxTotalAmount'] to #display_max_total_amount? " do
-    response.display_max_total_amount.should be_true
+    expect(response.display_max_total_amount).to be_truthy
   end
 
   it "maps ['addressList']['address'][0]['addressId'] to #addresses.first.id" do
-    response.addresses.first.id.should == "abc123"
+    expect(response.addresses.first.id).to eq("abc123")
   end
 
   it "maps ['addressList']['address'][0]['addresseeName'] to #addresses.first.addressee_name" do
-    response.addresses.first.addressee_name.should == "Bob Cat"
+    expect(response.addresses.first.addressee_name).to eq("Bob Cat")
   end
 
   it "maps ['addressList']['address'][0]['baseAddress']['line1'] to #addresses.first.line1" do
-    response.addresses.first.line1.should == "56 Bobcat St"
+    expect(response.addresses.first.line1).to eq("56 Bobcat St")
   end
 
   it "maps ['addressList']['address'][0]['baseAddress']['line2'] to #addresses.first.line2" do
-    response.addresses.first.line2.should == "Some estate"
+    expect(response.addresses.first.line2).to eq("Some estate")
   end
 
   it "maps ['addressList']['address'][0]['baseAddress']['city'] to #addresses.first.city" do
-    response.addresses.first.city.should == "Bobcaton"
+    expect(response.addresses.first.city).to eq("Bobcaton")
   end
 
   it "maps ['addressList']['address'][0]['baseAddress']['state'] to #addresses.first.state" do
-    response.addresses.first.state.should == "BCT"
+    expect(response.addresses.first.state).to eq("BCT")
   end
 
   it "maps ['addressList']['address'][0]['baseAddress']['postalCode'] to #addresses.first.postal_code" do
-    response.addresses.first.postal_code.should == "BC1 BC2"
+    expect(response.addresses.first.postal_code).to eq("BC1 BC2")
   end
 
   it "maps ['addressList']['address'][0]['baseAddress']['countryCode'] to #addresses.first.country_code" do
-    response.addresses.first.country_code.should == "BC"
+    expect(response.addresses.first.country_code).to eq("BC")
   end
 
   it "maps ['addressList']['address'][0]['baseAddress']['type'] to #addresses.first.type" do
-    response.addresses.first.type.should == "Home"
+    expect(response.addresses.first.type).to eq("Home")
   end
 
   it "maps ['addressList']['address'][1]['addressId'] to #addresses.last.id" do
-    response.addresses.last.id.should == "abc456"
+    expect(response.addresses.last.id).to eq("abc456")
   end
 
   it "maps ['addressList']['address'][1]['addresseeName'] to #addresses.last.addressee_name" do
-    response.addresses.last.addressee_name.should == "Pete Mouse"
+    expect(response.addresses.last.addressee_name).to eq("Pete Mouse")
   end
 
   it "maps ['addressList']['address'][1]['baseAddress']['line1'] to #addresses.last.line1" do
-    response.addresses.last.line1.should == "2 Le Hole"
+    expect(response.addresses.last.line1).to eq("2 Le Hole")
   end
 end

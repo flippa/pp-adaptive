@@ -18,7 +18,7 @@ describe AdaptivePayments::Node do
     let(:child) { model.new.child }
 
     it "is an instance of the boxed type" do
-      child.should be_an_instance_of(child_model)
+      expect(child).to be_an_instance_of(child_model)
     end
   end
 
@@ -26,11 +26,11 @@ describe AdaptivePayments::Node do
     let(:object) { model.new(:child => { :example => "anything" }) }
 
     it "coerces hash to instances of the given type" do
-      object.child.should be_an_instance_of(child_model)
+      expect(object.child).to be_an_instance_of(child_model)
     end
 
     it "maintains the original keys" do
-      object.child.example.should == "anything"
+      expect(object.child.example).to eq("anything")
     end
   end
 
@@ -39,7 +39,7 @@ describe AdaptivePayments::Node do
       let(:json) { model.new(:child => { :example => "whatever" }).to_json }
 
       it "is present as a child in the output" do
-        json.should == '{"child":{"example":"whatever"}}'
+        expect(json).to eq('{"child":{"example":"whatever"}}')
       end
     end
 
@@ -47,7 +47,7 @@ describe AdaptivePayments::Node do
       let(:json) { model.new.to_json }
 
       it "is omitted from the output" do
-        json.should == '{}'
+        expect(json).to eq('{}')
       end
     end
   end

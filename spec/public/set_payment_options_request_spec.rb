@@ -4,7 +4,11 @@ describe AdaptivePayments::SetPaymentOptionsRequest do
   it_behaves_like "a RequestEnvelope"
 
   subject         { AdaptivePayments::SetPaymentOptionsRequest }
-  its(:operation) { should == :SetPaymentOptions }
+
+  describe '#operation' do
+    subject { super().operation }
+    it { is_expected.to eq(:SetPaymentOptions) }
+  end
 
   let(:request) do
     AdaptivePayments::SetPaymentOptionsRequest.new(
@@ -47,90 +51,90 @@ describe AdaptivePayments::SetPaymentOptionsRequest do
   let(:json)  { JSON.parse(request.to_json) }
 
   it "maps #pay_key to ['payKey']" do
-    json["payKey"].should == "ABCD-1234"
+    expect(json["payKey"]).to eq("ABCD-1234")
   end
 
   it "maps #institution_id to ['initiatingEntity']['institutionCustomer']['institutionId']" do
-    json["initiatingEntity"]["institutionCustomer"]["institutionId"].should == "inst123"
+    expect(json["initiatingEntity"]["institutionCustomer"]["institutionId"]).to eq("inst123")
   end
 
   it "maps #customer_first_name to ['initiatingEntity']['institutionCustomer']['firstName']" do
-    json["initiatingEntity"]["institutionCustomer"]["firstName"].should == "Bob"
+    expect(json["initiatingEntity"]["institutionCustomer"]["firstName"]).to eq("Bob")
   end
 
   it "maps #customer_last_name to ['initiatingEntity']['institutionCustomer']['lastName']" do
-    json["initiatingEntity"]["institutionCustomer"]["lastName"].should == "Cat"
+    expect(json["initiatingEntity"]["institutionCustomer"]["lastName"]).to eq("Cat")
   end
 
   it "maps #customer_display_name to ['initiatingEntity']['institutionCustomer']['displayName']" do
-    json["initiatingEntity"]["institutionCustomer"]["displayName"].should == "Bobcat"
+    expect(json["initiatingEntity"]["institutionCustomer"]["displayName"]).to eq("Bobcat")
   end
 
   it "maps #institution_customer_id to ['initiatingEntity']['institutionCustomer']['institutionCustomerId']" do
-    json["initiatingEntity"]["institutionCustomer"]["institutionCustomerId"].should == "77"
+    expect(json["initiatingEntity"]["institutionCustomer"]["institutionCustomerId"]).to eq("77")
   end
 
   it "maps #customer_country_code to ['initiatingEntity']['institutionCustomer']['countryCode']" do
-    json["initiatingEntity"]["institutionCustomer"]["countryCode"].should == "AU"
+    expect(json["initiatingEntity"]["institutionCustomer"]["countryCode"]).to eq("AU")
   end
 
   it "maps #customer_email to ['initiatingEntity']['institutionCustomer']['email']" do
-    json["initiatingEntity"]["institutionCustomer"]["email"].should == "bob@site.com"
+    expect(json["initiatingEntity"]["institutionCustomer"]["email"]).to eq("bob@site.com")
   end
 
   it "maps #email_header_image_url to ['displayOptions']['emailHeaderImageUrl']" do
-    json["displayOptions"]["emailHeaderImageUrl"].should == "http://site.com/email.png"
+    expect(json["displayOptions"]["emailHeaderImageUrl"]).to eq("http://site.com/email.png")
   end
 
   it "maps #email_marketing_image_url to ['displayOptions']['emailMarketingImageUrl']" do
-    json["displayOptions"]["emailMarketingImageUrl"].should == "http://site.com/marketing.png"
+    expect(json["displayOptions"]["emailMarketingImageUrl"]).to eq("http://site.com/marketing.png")
   end
 
   it "maps #header_image_url to ['displayOptions']['headerImageUrl']" do
-    json["displayOptions"]["headerImageUrl"].should == "http://site.com/header.png"
+    expect(json["displayOptions"]["headerImageUrl"]).to eq("http://site.com/header.png")
   end
 
   it "maps #shipping_address_id to ['shippingAddressId']" do
-    json["shippingAddressId"].should == "addr123"
+    expect(json["shippingAddressId"]).to eq("addr123")
   end
 
   it "maps #require_shipping_address_selection?  to ['senderOptions']['requireShippingAddressSelection']" do
-    json["senderOptions"]["requireShippingAddressSelection"].should be_true
+    expect(json["senderOptions"]["requireShippingAddressSelection"]).to be_truthy
   end
 
   it "maps #receiver_options.first.description to ['receiverOptions'][0]['description']" do
-    json["receiverOptions"][0]["description"].should == "Primary receiver"
+    expect(json["receiverOptions"][0]["description"]).to eq("Primary receiver")
   end
 
   it "maps #receiver_options.first.custom_id to ['receiverOptions'][0]['customId']" do
-    json["receiverOptions"][0]["customId"].should == "cust123"
+    expect(json["receiverOptions"][0]["customId"]).to eq("cust123")
   end
 
   it "maps #receiver_options.first.invoice_data.total_tax to ['receiverOptions'][0]['invoiceData']['totalTax']" do
-    json["receiverOptions"][0]["invoiceData"]["totalTax"].should == "2.00"
+    expect(json["receiverOptions"][0]["invoiceData"]["totalTax"]).to eq("2.00")
   end
 
   it "maps #receiver_options.first.invoice_data.total_shipping to ['receiverOptions'][0]['invoiceData']['totalShipping']" do
-    json["receiverOptions"][0]["invoiceData"]["totalShipping"].should == "0.00"
+    expect(json["receiverOptions"][0]["invoiceData"]["totalShipping"]).to eq("0.00")
   end
 
   it "maps #receiver_options.first.invoice_data.items.first.name to ['receiverOptions'][0]['invoiceData']['item'][0]['name']" do
-    json["receiverOptions"][0]["invoiceData"]["item"][0]["name"].should == "Video Game"
+    expect(json["receiverOptions"][0]["invoiceData"]["item"][0]["name"]).to eq("Video Game")
   end
 
   it "maps #receiver_options.first.invoice_data.items.first.identifier to ['receiverOptions'][0]['invoiceData']['item'][0]['identifier']" do
-    json["receiverOptions"][0]["invoiceData"]["item"][0]["identifier"].should == "ident123"
+    expect(json["receiverOptions"][0]["invoiceData"]["item"][0]["identifier"]).to eq("ident123")
   end
 
   it "maps #receiver_options.first.invoice_data.items.first.price to ['receiverOptions'][0]['invoiceData']['item'][0]['price']" do
-    json["receiverOptions"][0]["invoiceData"]["item"][0]["price"].should == "20.00"
+    expect(json["receiverOptions"][0]["invoiceData"]["item"][0]["price"]).to eq("20.00")
   end
 
   it "maps #receiver_options.first.invoice_data.items.first.item_price to ['receiverOptions'][0]['invoiceData']['item'][0]['itemPrice']" do
-    json["receiverOptions"][0]["invoiceData"]["item"][0]["itemPrice"].should == "10.00"
+    expect(json["receiverOptions"][0]["invoiceData"]["item"][0]["itemPrice"]).to eq("10.00")
   end
 
   it "maps #receiver_options.first.invoice_data.items.first.item_count to ['receiverOptions'][0]['invoiceData']['item'][0]['itemCount']" do
-    json["receiverOptions"][0]["invoiceData"]["item"][0]["itemCount"].should == 2
+    expect(json["receiverOptions"][0]["invoiceData"]["item"][0]["itemCount"]).to eq(2)
   end
 end

@@ -23,38 +23,38 @@ shared_examples "a FaultMessage" do
   end
 
   it "maps ['error'][0]['errorId'] to #error_id" do
-    response.error_id.should == 1234
+    expect(response.error_id).to eq(1234)
   end
 
   it "maps ['error'][0]['domain'] to #error_domain" do
-    response.error_domain.should == "PLATFORM"
+    expect(response.error_domain).to eq("PLATFORM")
   end
 
   it "maps ['error'][0]['subdomain'] to #error_subdomain" do
-    response.error_subdomain.should == "Application"
+    expect(response.error_subdomain).to eq("Application")
   end
 
   it "maps ['error'][0]['severity'] to #error_severity" do
-    response.error_severity.should == "Error"
+    expect(response.error_severity).to eq("Error")
   end
 
   it "maps ['error'][0]['category'] to #error_category" do
-    response.error_category.should == "Application"
+    expect(response.error_category).to eq("Application")
   end
 
   it "maps ['error'][0]['message'] to #error_message" do
-    response.error_message.should == "An error message"
+    expect(response.error_message).to eq("An error message")
   end
 
   it "maps ['error'][0]['parameter'][0] to #error_parameters.first" do
-    response.error_parameters.first.should == "X-HEADER-FIELD"
+    expect(response.error_parameters.first).to eq("X-HEADER-FIELD")
   end
 
   it "maps ['error'][0]['parameter'][1] to #error_parameters.last" do
-    response.error_parameters.last.should == "X-OTHER-FIELD"
+    expect(response.error_parameters.last).to eq("X-OTHER-FIELD")
   end
 
   it "allows access to additional errors via #errors" do
-    response.errors.last.id.should == 2345
+    expect(response.errors.last.id).to eq(2345)
   end
 end

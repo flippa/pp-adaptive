@@ -15,22 +15,22 @@ shared_examples "a ResponseEnvelope" do
   end
 
   it "maps ['responseEnvelope']['ack'] to #ack_code" do # 
-    response.ack_code.should == "Success"
+    expect(response.ack_code).to eq("Success")
   end
 
   it "maps ['responseEnvelope']['build'] to #build" do
-    response.build.should == "123456"
+    expect(response.build).to eq("123456")
   end
 
   it "maps ['responseEnvelope']['timestamp'] to #time" do
-    response.time.should == DateTime.new(2011, 9, 21)
+    expect(response.time).to eq(DateTime.new(2011, 9, 21))
   end
 
   it "maps ['responseEnvelope']['correlationId'] to #correlation_id" do
-    response.correlation_id.should == "1234"
+    expect(response.correlation_id).to eq("1234")
   end
 
   it "provides predicate methods for the ack code" do
-    response.success?.should be_true
+    expect(response.success?).to be_truthy
   end
 end

@@ -4,7 +4,11 @@ describe AdaptivePayments::PreapprovalRequest do
   it_behaves_like "a RequestEnvelope"
 
   subject         { AdaptivePayments::PreapprovalRequest }
-  its(:operation) { should == :Preapproval }
+
+  describe '#operation' do
+    subject { super().operation }
+    it { is_expected.to eq(:Preapproval) }
+  end
 
   let(:request) do
     AdaptivePayments::PreapprovalRequest.new(
@@ -32,79 +36,79 @@ describe AdaptivePayments::PreapprovalRequest do
   let(:json) { JSON.parse(request.to_json) }
 
   it "maps #ending_date to ['endingDate']" do
-    json["endingDate"].should == "2011-09-20T07:57:02+10:00"
+    expect(json["endingDate"]).to eq("2011-09-20T07:57:02+10:00")
   end
 
   it "maps #starting_date to ['startingDate']" do
-    json["startingDate"].should == "2011-09-20T07:49:02+05:00"
+    expect(json["startingDate"]).to eq("2011-09-20T07:49:02+05:00")
   end
 
   it "maps #max_total_amount to ['maxTotalAmountOfAllPayments']" do
-    json["maxTotalAmountOfAllPayments"].should == "720.00"
+    expect(json["maxTotalAmountOfAllPayments"]).to eq("720.00")
   end
 
   it "maps #currency_code to ['currencyCode']" do
-    json["currencyCode"].should == "USD"
+    expect(json["currencyCode"]).to eq("USD")
   end
 
   it "maps #cancel_url to ['cancelUrl']" do
-    json["cancelUrl"].should == "http://site.com/cancelled"
+    expect(json["cancelUrl"]).to eq("http://site.com/cancelled")
   end
 
   it "maps #return_url to ['returnUrl']" do
-    json["returnUrl"].should == "http://site.com/succeeded"
+    expect(json["returnUrl"]).to eq("http://site.com/succeeded")
   end
 
   it "maps #ipn_notification_url to ['ipnNotificationUrl']" do
-    json["ipnNotificationUrl"].should == "http://site.com/ipn"
+    expect(json["ipnNotificationUrl"]).to eq("http://site.com/ipn")
   end
 
   it "maps #date_of_month to ['dateOfMonth']" do
-    json["dateOfMonth"].should == 15
+    expect(json["dateOfMonth"]).to eq(15)
   end
 
   it "maps #day_of_week to ['dayOfWeek']" do
-    json["dayOfWeek"].should == "friday"
+    expect(json["dayOfWeek"]).to eq("friday")
   end
 
   it "maps #max_amount_per_payment to ['maxAmountPerPayment']" do
-    json["maxAmountPerPayment"].should == "60.00"
+    expect(json["maxAmountPerPayment"]).to eq("60.00")
   end
 
   it "maps #max_payments to ['maxNumberOfPayments']" do
-    json["maxNumberOfPayments"].should == 12
+    expect(json["maxNumberOfPayments"]).to eq(12)
   end
 
   it "maps #max_payments_per_period to ['maxNumberOfPaymentsPerPeriod']" do
-    json["maxNumberOfPaymentsPerPeriod"].should == 1
+    expect(json["maxNumberOfPaymentsPerPeriod"]).to eq(1)
   end
 
   it "maps #payment_period to ['paymentPeriod']" do
-    json["paymentPeriod"].should == "monthly"
+    expect(json["paymentPeriod"]).to eq("monthly")
   end
 
   it "maps #memo to ['memo']" do
-    json["memo"].should == "some memo"
+    expect(json["memo"]).to eq("some memo")
   end
 
   it "maps #sender_email to ['senderEmail']" do
-    json["senderEmail"].should == "sender@site.com"
+    expect(json["senderEmail"]).to eq("sender@site.com")
   end
 
   it "maps #pin_type to ['pinType']" do
-    json["pinType"].should == "required"
+    expect(json["pinType"]).to eq("required")
   end
 
   it "maps #fees_payer to ['feesPayer']" do
-    json["feesPayer"].should == "sender"
+    expect(json["feesPayer"]).to eq("sender")
   end
 
   it "maps #display_max_total_amount to ['displayMaxTotalAmount']" do
-    json["displayMaxTotalAmount"].should == false
+    expect(json["displayMaxTotalAmount"]).to eq(false)
   end
 
   it "does not include omitted parameters" do
     request.max_amount_per_payment = nil
-    json.should_not have_key("maxAmountPerPayment")
+    expect(json).not_to have_key("maxAmountPerPayment")
   end
 end

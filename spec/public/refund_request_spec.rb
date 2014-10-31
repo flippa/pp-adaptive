@@ -4,7 +4,11 @@ describe AdaptivePayments::RefundRequest do
   it_behaves_like "a RequestEnvelope"
 
   subject         { AdaptivePayments::RefundRequest }
-  its(:operation) { should == :Refund }
+
+  describe '#operation' do
+    subject { super().operation }
+    it { is_expected.to eq(:Refund) }
+  end
 
   let(:request) do
     AdaptivePayments::RefundRequest.new(
@@ -20,38 +24,38 @@ describe AdaptivePayments::RefundRequest do
   let(:json) { JSON.parse(request.to_json) }
 
   it "maps #currency_code to ['currencyCode']" do
-    json["currencyCode"].should == "USD"
+    expect(json["currencyCode"]).to eq("USD")
   end
 
   it "maps #pay_key to ['payKey']" do
-    json["payKey"].should == "ABCD-1234"
+    expect(json["payKey"]).to eq("ABCD-1234")
   end
 
   it "maps #tracking_id to ['trackingId']" do
-    json["trackingId"].should == "some.id"
+    expect(json["trackingId"]).to eq("some.id")
   end
 
   it "maps #transaction_id to ['transactionId']" do
-    json["transactionId"].should == "trans123"
+    expect(json["transactionId"]).to eq("trans123")
   end
 
   it "maps #ipn_notification_url to ['ipnNotificationUrl']" do
-    json["ipnNotificationUrl"].should == "http://site.com/ipn"
+    expect(json["ipnNotificationUrl"]).to eq("http://site.com/ipn")
   end
 
   it "maps #receivers.first.email to ['receiverList']['receiver'][0]['email']" do
-    json["receiverList"]["receiver"][0]["email"].should == "first@site.com"
+    expect(json["receiverList"]["receiver"][0]["email"]).to eq("first@site.com")
   end
 
   it "maps #receivers.first.amount to ['receiverList']['receiver'][0]['amount']" do
-    json["receiverList"]["receiver"][0]["amount"].should == "10.00"
+    expect(json["receiverList"]["receiver"][0]["amount"]).to eq("10.00")
   end
 
   it "maps #receivers.last.email to ['receiverList']['receiver'][1]['email']" do
-    json["receiverList"]["receiver"][1]["email"].should == "other@site.com"
+    expect(json["receiverList"]["receiver"][1]["email"]).to eq("other@site.com")
   end
 
   it "maps #receivers.last.amount to ['receiverList']['receiver'][1]['amount']" do
-    json["receiverList"]["receiver"][1]["amount"].should == "2.00"
+    expect(json["receiverList"]["receiver"][1]["amount"]).to eq("2.00")
   end
 end
