@@ -123,6 +123,22 @@ module AdaptivePayments
       ].join
     end
 
+    # When initiating a digital goods payment, get the URL on paypal.com to send the user to.
+    #
+    # @param [PayResponse] response
+    #   the response when setting up the payment
+    #
+    # @return [String]
+    #   the URL on paypal.com to send the user to
+    def digital_goods_payment_url(response)
+      [
+        "https://www.",
+        ("sandbox." if sandbox?),
+        "paypal.com/webapps/adaptivepayment/flow/pay?paykey=",
+        response.pay_key
+      ].join
+    end
+
     private
 
     def api_url
