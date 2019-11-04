@@ -130,7 +130,7 @@ module AdaptivePayments
     #
     # @return [String]
     #   the URL on paypal.com to send the user to
-    def digitalgoods_payment_url(response)
+    def digital_goods_payment_url(response)
       [
         "https://www.",
         ("sandbox." if sandbox?),
